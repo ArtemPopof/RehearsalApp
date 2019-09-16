@@ -19,6 +19,6 @@ class MenuActivity : AppCompatActivity() {
     }
 
     fun onPlaceViewClicked(view : View) {
-        PlaceViewActivity.launchFrom(this)
+        PlaceViewActivity.launchForView(this, 0)
     }
 }
