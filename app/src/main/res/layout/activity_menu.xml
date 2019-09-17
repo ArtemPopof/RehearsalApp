@@ -24,4 +24,12 @@
         android:onClick="onMapClicked"
         android:text="Map activity" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onAddNewPlaceClicked"
+        android:text="Add new place" />
+
 </LinearLayout>

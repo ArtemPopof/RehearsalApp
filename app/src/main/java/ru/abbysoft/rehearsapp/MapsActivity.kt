@@ -12,6 +12,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import ru.abbysoft.rehearsapp.place.PlaceViewActivity
+import ru.abbysoft.rehearsapp.util.zoomMapToCurrentLocation
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -38,10 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        zoomMapToCurrentLocation(googleMap)
     }
 
     companion object {

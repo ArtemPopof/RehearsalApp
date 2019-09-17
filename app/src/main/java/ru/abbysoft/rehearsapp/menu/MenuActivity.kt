@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import ru.abbysoft.rehearsapp.MapsActivity
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.place.PlaceCreationActivity
 import ru.abbysoft.rehearsapp.place.PlaceViewActivity
 
 class MenuActivity : AppCompatActivity() {
@@ -20,5 +21,9 @@ class MenuActivity : AppCompatActivity() {
 
     fun onPlaceViewClicked(view : View) {
         PlaceViewActivity.launchForView(this, 0)
+    }
+
+    fun onAddNewPlaceClicked(view : View) {
+        PlaceCreationActivity.launch(view)
     }
 }

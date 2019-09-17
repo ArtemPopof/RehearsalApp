@@ -19,9 +19,9 @@ class RehearsalApp : Application() {
         // inflate test data
         val cache = CacheFactory.getDefaultCacheInstance()
         cache.addPlace(Place("SoundBase", getImageFromWeb("https://repa24.ru/images/bases/89/1862.jpg")))
-        cache.addPlace(Place("CloudBase", getImageFromWeb("https://repa24.ru/images/bases/14/329.jpg")))
-        cache.addPlace(Place("Good Place", getImageFromWeb("https://repa24.ru/images/bases/26/568.jpg")))
-        cache.addPlace(Place("Don't go here", getImageFromWeb("https://www.studiorent.ru/upload_data/4808/upldEbXvAL.jpg")))
+//        cache.addPlace(Place("CloudBase", getImageFromWeb("https://repa24.ru/images/bases/14/329.jpg")))
+//        cache.addPlace(Place("Good Place", getImageFromWeb("https://repa24.ru/images/bases/26/568.jpg")))
+//        cache.addPlace(Place("Don't go here", getImageFromWeb("https://www.studiorent.ru/upload_data/4808/upldEbXvAL.jpg")))
     }
 
     private fun getImageFromWeb(path: String): Bitmap {
