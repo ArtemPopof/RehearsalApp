@@ -8,9 +8,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.util.MapMarkerCreator
 import ru.abbysoft.rehearsapp.util.zoomMapToCurrentLocation
 
 class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    lateinit var markerCreator : MapMarkerCreator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,7 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
+        markerCreator = MapMarkerCreator(map)
         zoomMapToCurrentLocation(map)
     }
 }
