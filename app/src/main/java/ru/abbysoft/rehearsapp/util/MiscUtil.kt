@@ -15,7 +15,7 @@ fun showErrorMessage(message: String, context: Context) {
         .show()
 }
 
-fun EditText.validateThatNotBlank() : Boolean{
+fun EditText.validateThatNotBlank() : Boolean {
     if (text.isBlank()) {
         error = ("This field cannot be blank")
         return false
