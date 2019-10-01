@@ -1,6 +1,6 @@
 package ru.abbysoft.rehearsapp.cache
 
-import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.cache.model.Place
 
 interface Cache {
 

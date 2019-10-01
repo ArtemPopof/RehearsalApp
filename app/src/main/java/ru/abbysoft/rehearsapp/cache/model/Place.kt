@@ -1,4 +1,4 @@
-package ru.abbysoft.rehearsapp.model
+package ru.abbysoft.rehearsapp.cache.model
 
 import android.graphics.Bitmap
 import com.google.android.gms.maps.model.LatLng

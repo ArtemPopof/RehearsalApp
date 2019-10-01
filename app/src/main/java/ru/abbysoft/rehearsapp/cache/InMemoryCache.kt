@@ -1,7 +1,7 @@
 package ru.abbysoft.rehearsapp.cache
 
 import android.util.SparseArray
-import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.cache.model.Place
 
 var counter = 0
 

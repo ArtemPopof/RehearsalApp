@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceCreationBinding
-import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.cache.model.Place
 import ru.abbysoft.rehearsapp.util.MapMarkerCreator
 import ru.abbysoft.rehearsapp.util.showErrorMessage
 import ru.abbysoft.rehearsapp.util.validateThatNotBlank
