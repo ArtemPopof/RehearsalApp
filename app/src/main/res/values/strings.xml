@@ -98,4 +98,9 @@
     <string name="new_place_placeholder">New place</string>
     <string name="save">Save</string>
     <string name="oops">Oops!</string>
+    <string name="should_not_be_empty">This field should not be empty</string>
+    <string name="new_place">New Place</string>
+    <string name="default_place_name">New Place</string>
+    <string name="place_location_not_set">Place location must be specified</string>
+    <string name="place_name_blank">Specify your place name</string>
 </resources>

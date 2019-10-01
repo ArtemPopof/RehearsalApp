@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.GoogleMap
@@ -17,6 +18,7 @@ import ru.abbysoft.rehearsapp.databinding.ActivityPlaceCreationBinding
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.util.MapMarkerCreator
 import ru.abbysoft.rehearsapp.util.showErrorMessage
+import ru.abbysoft.rehearsapp.util.validateThatNotBlank
 import ru.abbysoft.rehearsapp.util.zoomMapToCurrentLocation
 
 class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -26,10 +28,14 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var markerCreator : MapMarkerCreator
     private lateinit var model : PlaceCreationViewModel
 
+    private lateinit var nameField : EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         configureViewModel()
+
+        nameField = findViewById(R.id.place_creation_name)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -59,10 +65,10 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun save(view: View) {
         if (markerCreator.marker == null) {
-            showErrorMessage("Place location must be specified", this)
-
+            showErrorMessage(getString(R.string.place_location_not_set), this)
             return
         }
+        if (!nameField.validateThatNotBlank()) return
 
         val location = markerCreator.marker?.position
 
