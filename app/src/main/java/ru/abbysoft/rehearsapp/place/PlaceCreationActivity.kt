@@ -30,6 +30,8 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var nameField : EditText
 
+    private var lastCreatedPlace : Long? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -70,13 +72,26 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         if (!nameField.validateThatNotBlank()) return
 
+
         val location = markerCreator.marker?.position
 
         val place = Place(model.name, location as LatLng)
-        val id = CacheFactory.getDefaultCacheInstance().addPlace(place)
 
-        Log.i(TAG, "Place saved $place")
+        if (lastCreatedPlace != null) {
+            editExisting(CacheFactory.getDefaultCacheInstance().getPlace(lastCreatedPlace as Long),
+                location)
+            Log.i(TAG, "Place changed $place")
+        } else {
+            val id = CacheFactory.getDefaultCacheInstance().addPlace(place)
+            Log.i(TAG, "Place saved $place")
+            lastCreatedPlace = id
+        }
 
-        PlaceViewActivity.launchForView(this, id)
+        PlaceViewActivity.launchForView(this, lastCreatedPlace as Long)
+    }
+
+    private fun editExisting(place: Place, position: LatLng) {
+        place.position = position
+        place.name = model.name
     }
 }
