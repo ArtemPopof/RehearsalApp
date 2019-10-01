@@ -92,4 +92,10 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="what_is_place_name">What\'s your place name?</string>
+    <string name="where_your_place_located">Where your place located?</string>
+    <string name="new_place_default_name">New place</string>
+    <string name="new_place_placeholder">New place</string>
+    <string name="save">Save</string>
+    <string name="oops">Oops!</string>
 </resources>

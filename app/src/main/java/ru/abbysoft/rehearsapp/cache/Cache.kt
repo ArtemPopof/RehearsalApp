@@ -6,5 +6,5 @@ interface Cache {
 
     fun getPlace(id : Long) : Place
 
-    fun addPlace(place : Place)
+    fun addPlace(place : Place) : Long
 }

@@ -3,26 +3,47 @@ package ru.abbysoft.rehearsapp.place
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.cache.CacheFactory
+import ru.abbysoft.rehearsapp.databinding.ActivityPlaceCreationBinding
+import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.util.MapMarkerCreator
+import ru.abbysoft.rehearsapp.util.showErrorMessage
 import ru.abbysoft.rehearsapp.util.zoomMapToCurrentLocation
 
 class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    lateinit var markerCreator : MapMarkerCreator
+    private val TAG = PlaceCreationActivity::class.java.name
+
+    private lateinit var markerCreator : MapMarkerCreator
+    private lateinit var model : PlaceCreationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_place_creation)
+
+        configureViewModel()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+    }
+
+    private fun configureViewModel() {
+        val binding = DataBindingUtil.setContentView<ActivityPlaceCreationBinding>(
+            this, R.layout.activity_place_creation)
+
+        model = ViewModelProviders.of(this)[PlaceCreationViewModel::class.java]
+
+        binding.model = model
     }
 
     companion object {
@@ -34,5 +55,22 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         markerCreator = MapMarkerCreator(map)
         zoomMapToCurrentLocation(map)
+    }
+
+    fun save(view: View) {
+        if (markerCreator.marker == null) {
+            showErrorMessage("Place location must be specified", this)
+
+            return
+        }
+
+        val location = markerCreator.marker?.position
+
+        val place = Place(model.name, location as LatLng)
+        val id = CacheFactory.getDefaultCacheInstance().addPlace(place)
+
+        Log.i(TAG, "Place saved $place")
+
+        PlaceViewActivity.launchForView(this, id)
     }
 }

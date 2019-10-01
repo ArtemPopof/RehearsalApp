@@ -13,7 +13,9 @@ class InMemoryCache : Cache {
         return storage.get(id.toInt())
     }
 
-    override fun addPlace(place: Place) {
+    override fun addPlace(place: Place) : Long {
         storage.put(counter++, place)
+
+        return counter - 1L
     }
 }

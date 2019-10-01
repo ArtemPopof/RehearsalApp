@@ -3,9 +3,11 @@ package ru.abbysoft.rehearsapp
 import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.util.getCurrentLocation
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -18,17 +20,18 @@ class RehearsalApp : Application() {
 
         // inflate test data
         val cache = CacheFactory.getDefaultCacheInstance()
-        cache.addPlace(Place("SoundBase", getImageFromWeb("https://repa24.ru/images/bases/89/1862.jpg")))
+        cache.addPlace(Place("SoundBase", getCurrentLocation(),
+            getImageFromWeb("https://repa24.ru/images/bases/89/1862.jpg")))
 //        cache.addPlace(Place("CloudBase", getImageFromWeb("https://repa24.ru/images/bases/14/329.jpg")))
 //        cache.addPlace(Place("Good Place", getImageFromWeb("https://repa24.ru/images/bases/26/568.jpg")))
 //        cache.addPlace(Place("Don't go here", getImageFromWeb("https://www.studiorent.ru/upload_data/4808/upldEbXvAL.jpg")))
     }
 
-    private fun getImageFromWeb(path: String): Bitmap {
+    private fun getImageFromWeb(path: String): Bitmap? {
         val bitmap = ImageDownloader().execute(path)
-            ?: return BitmapFactory.decodeResource(resources, R.drawable.ic_launcher_foreground)
+            ?: null
 
-        return bitmap.get()
+        return bitmap?.get()
     }
 
     private class ImageDownloader : AsyncTask<String, Int, Bitmap>() {

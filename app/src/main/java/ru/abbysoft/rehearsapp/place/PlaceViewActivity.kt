@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_place_view.*
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceViewBinding
+import ru.abbysoft.rehearsapp.model.Place
 import java.lang.IllegalArgumentException
 
 const val PLACE_ID_EXTRA = "PlaceidExtra"
@@ -42,7 +43,6 @@ class PlaceViewActivity : AppCompatActivity() {
 
     private fun configureActivity(id : Long) {
         val place = CacheFactory.getDefaultCacheInstance().getPlace(id)
-        binding.background = place.headerImage
         binding.placeName = place.name
     }
 
