@@ -1,10 +1,15 @@
 package ru.abbysoft.rehearsapp.rest
 
+import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.IllegalStateException
 
 class ServiceFactory private constructor(baseUrl: String) {
 
-    private val retrofit = retrofit2.Retrofit.Builder().baseUrl(baseUrl).build()
+    private val retrofit = retrofit2.Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
     private var databaseService: DatabaseService
 
     init {

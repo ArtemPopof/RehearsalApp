@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'ru.abbysoft.rehearsapp:model:0.0.1-SNAPSHOT'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

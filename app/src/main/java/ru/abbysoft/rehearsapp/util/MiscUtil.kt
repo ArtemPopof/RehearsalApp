@@ -23,3 +23,7 @@ fun EditText.validateThatNotBlank() : Boolean {
 
     return true
 }
+
+fun getRestBase() : String {
+    return "http://80.78.254.138:8080/"
+}

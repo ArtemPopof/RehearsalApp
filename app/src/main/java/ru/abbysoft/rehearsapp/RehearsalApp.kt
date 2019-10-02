@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.cache.model.Place
+import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.getCurrentLocation
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -18,6 +19,16 @@ class RehearsalApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        initRestService()
+
+        generateTestData()
+    }
+
+    private fun initRestService() {
+        ServiceFactory.init("http://80.78.254.138:8080/")
+    }
+
+    private fun generateTestData() {
         // inflate test data
         val cache = CacheFactory.getDefaultCacheInstance()
         cache.addPlace(
