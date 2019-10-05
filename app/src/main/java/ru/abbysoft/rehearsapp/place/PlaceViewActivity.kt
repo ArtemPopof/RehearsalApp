@@ -3,22 +3,25 @@ package ru.abbysoft.rehearsapp.place
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlinx.android.synthetic.main.activity_place_view.*
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceViewBinding
-import ru.abbysoft.rehearsapp.cache.model.Place
+import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.rest.ServiceFactory
+import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
 import java.lang.IllegalArgumentException
 
 const val PLACE_ID_EXTRA = "PlaceidExtra"
 
 class PlaceViewActivity : AppCompatActivity() {
+
+    val TAG = PlaceViewActivity::class.java.name
 
     lateinit var binding : ActivityPlaceViewBinding
 
@@ -42,7 +45,20 @@ class PlaceViewActivity : AppCompatActivity() {
     }
 
     private fun configureActivity(id : Long) {
-        val place = CacheFactory.getDefaultCacheInstance().getPlace(id)
+        AsyncServiceRequest(
+            Consumer<Place> {
+                placeLoaded(it)
+            },
+            Consumer {
+                Log.e(TAG, "Cannot get place from repo")
+                it.printStackTrace()
+                finish()
+            },
+            3
+        ).execute(ServiceFactory.getDatabaseService().getPlace(id))
+    }
+
+    private fun placeLoaded(place: Place) {
         binding.placeName = place.name
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.GoogleMap
@@ -15,11 +16,10 @@ import com.google.android.gms.maps.model.LatLng
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceCreationBinding
-import ru.abbysoft.rehearsapp.cache.model.Place
-import ru.abbysoft.rehearsapp.util.MapMarkerCreator
-import ru.abbysoft.rehearsapp.util.showErrorMessage
-import ru.abbysoft.rehearsapp.util.validateThatNotBlank
-import ru.abbysoft.rehearsapp.util.zoomMapToCurrentLocation
+import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.rest.ServiceFactory
+import ru.abbysoft.rehearsapp.util.*
+import java.lang.Exception
 
 class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -72,26 +72,45 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         if (!nameField.validateThatNotBlank()) return
 
-
         val location = markerCreator.marker?.position
 
-        val place = Place(model.name, location as LatLng)
+        val place = Place()
+        place.position = location.toString()
+        place.name = nameField.text.toString()
 
         if (lastCreatedPlace != null) {
-            editExisting(CacheFactory.getDefaultCacheInstance().getPlace(lastCreatedPlace as Long),
-                location)
-            Log.i(TAG, "Place changed $place")
+            //editExisting(CacheFactory.getDefaultCacheInstance().getPlace(lastCreatedPlace as Long),location)
+            addPlace(place)
         } else {
-            val id = CacheFactory.getDefaultCacheInstance().addPlace(place)
-            Log.i(TAG, "Place saved $place")
-            lastCreatedPlace = id
+            addPlace(place)
         }
 
+    }
+
+    private fun addPlace(place: Place) {
+        Log.i(TAG, "Saving place $place")
+
+        AsyncServiceRequest(
+            Consumer<Long> { placeSaved(it) },
+            Consumer { saveFailed(it) }
+        ).execute(ServiceFactory.getDatabaseService().addPlace(place))
+    }
+
+    private fun placeSaved(id: Long) {
+        Log.i(TAG, "Place saved with id $id")
+
+        lastCreatedPlace = id
         PlaceViewActivity.launchForView(this, lastCreatedPlace as Long)
     }
 
+    private fun saveFailed(ex: Exception) {
+        ex.printStackTrace()
+        Log.e(TAG, "Cannot save place!")
+    }
+
     private fun editExisting(place: Place, position: LatLng) {
-        place.position = position
-        place.name = model.name
+//        place.position = position
+//        place.name = model.name
+//        Log.i(TAG, "Place changed $place")
     }
 }
