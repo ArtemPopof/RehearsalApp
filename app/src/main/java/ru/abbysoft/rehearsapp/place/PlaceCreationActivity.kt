@@ -63,7 +63,7 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         markerCreator = MapMarkerCreator(map)
-        zoomMapToCurrentLocation(map)
+        zoomMapToCurrentLocation(map, this)
     }
 
     fun save(view: View) {

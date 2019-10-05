@@ -13,6 +13,8 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
                                    private val failCallback: Consumer<Exception>? = null,
                                    private val timeoutSec: Long = 10L) : AsyncTask<Call<T>, T, Nothing>() {
 
+    private var exception: Exception? = null
+
     private val TAG = AsyncServiceRequest::class.java.name
 
     val pool = Executors.newScheduledThreadPool(1)
@@ -21,7 +23,7 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
         if (timeoutSec > 0) {
             startTimer(Runnable {
                 this.cancel(true)
-                failCallback?.accept(TimeoutException())
+                exception = TimeoutException()
             })
         }
 
@@ -44,10 +46,22 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
         return null
     }
 
+    fun execute(call: Call<T>) {
+        super.execute(call)
+    }
+
     private fun handleException(ex: Exception) {
         ex.printStackTrace()
-        failCallback?.accept(ex)
         Log.e(TAG, ex.toString())
+        this.cancel(true)
+    }
+
+    override fun onCancelled() {
+        super.onCancelled()
+
+        if (exception != null) {
+            failCallback?.accept(exception)
+        }
     }
 
     private fun startTimer(callback: Runnable) {
