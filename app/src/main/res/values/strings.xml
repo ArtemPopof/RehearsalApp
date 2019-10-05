@@ -103,4 +103,6 @@
     <string name="default_place_name">New Place</string>
     <string name="place_location_not_set">Place location must be specified</string>
     <string name="place_name_blank">Specify your place name</string>
+    <string name="areaM2">%1.2f m2</string>
+    <string name="priceFrom">from %1.2f $</string>
 </resources>

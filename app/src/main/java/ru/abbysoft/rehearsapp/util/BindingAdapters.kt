@@ -3,7 +3,9 @@ package ru.abbysoft.rehearsapp.util
 import android.graphics.Bitmap
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import ru.abbysoft.rehearsapp.R
 
 object BindingAdapters {
     @JvmStatic
@@ -23,5 +25,17 @@ object BindingAdapters {
             field.error = ("This field can't be blank")
         }
 
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:price")
+    fun price(text: TextView, price: Float) {
+        text.text = text.context.getString(R.string.priceFrom, price)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:area")
+    fun area(text: TextView, area: Float) {
+        text.text = text.context.getString(R.string.areaM2, area)
     }
 }

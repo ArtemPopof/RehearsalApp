@@ -14,6 +14,7 @@ import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceViewBinding
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
+import ru.abbysoft.rehearsapp.room.RoomCardFragment
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
 import java.lang.IllegalArgumentException
 
@@ -60,6 +61,15 @@ class PlaceViewActivity : AppCompatActivity() {
 
     private fun placeLoaded(place: Place) {
         binding.placeName = place.name
+
+        configureRoomFragments(place)
+    }
+
+    private fun configureRoomFragments(place: Place) {
+        val roomCards = this.supportFragmentManager.fragments
+        for (i in place.rooms.indices) {
+            (roomCards[i] as RoomCardFragment).setRoom(place.rooms[i])
+        }
     }
 
     companion object {
