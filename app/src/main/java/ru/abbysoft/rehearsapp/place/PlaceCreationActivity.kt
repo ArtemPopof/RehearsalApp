@@ -17,6 +17,7 @@ import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceCreationBinding
 import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.*
 import java.lang.Exception
@@ -77,6 +78,13 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
         val place = Place()
         place.position = location.toString()
         place.name = nameField.text.toString()
+
+        // Todo remove, only for test
+        val rooms = place.rooms as ArrayList<Room>
+        rooms.add(Room(-1, "Room Red", 24.5f, 2f))
+        rooms.add(Room(-1, "Room VIP", 44.5f, 4.2f))
+        rooms.add(Room(-1, "Room GOLD", 74.55f, 6.9f))
+        //
 
         if (lastCreatedPlace != null) {
             //editExisting(CacheFactory.getDefaultCacheInstance().getPlace(lastCreatedPlace as Long),location)
