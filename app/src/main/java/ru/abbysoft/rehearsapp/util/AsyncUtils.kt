@@ -53,6 +53,7 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
     private fun handleException(ex: Exception) {
         ex.printStackTrace()
         Log.e(TAG, ex.toString())
+        this.exception = ex
         this.cancel(true)
     }
 
@@ -61,6 +62,8 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
 
         if (exception != null) {
             failCallback?.accept(exception)
+        } else {
+            Log.e(TAG, "error is null")
         }
     }
 
