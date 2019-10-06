@@ -1,6 +1,5 @@
 package ru.abbysoft.rehearsapp.menu
 
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,7 +15,6 @@ import ru.abbysoft.rehearsapp.util.showErrorMessage
 import java.util.*
 
 class MenuActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
