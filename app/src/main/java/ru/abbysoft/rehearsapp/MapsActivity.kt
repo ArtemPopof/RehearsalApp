@@ -14,9 +14,12 @@ import androidx.core.util.Consumer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.location
+import ru.abbysoft.rehearsapp.place.PlaceViewActivity
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
 import ru.abbysoft.rehearsapp.util.showErrorMessage
@@ -28,6 +31,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
     private var places: List<Place>? = null
+    private val positionPlace = HashMap<LatLng, Place>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         // get all places from rest
+        loadPlaces()
+    }
+
+    private fun loadPlaces() {
         AsyncServiceRequest<List<Place>>(
             Consumer {
                 places = it
@@ -49,8 +57,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             },
             Consumer {
-                showErrorMessage(getString(R.string.cannot_load_places),
-                    this)
+                showErrorMessage(
+                    getString(R.string.cannot_load_places),
+                    this
+                )
             },
             10
         ).execute(ServiceFactory.getDatabaseService().getAllPlaces())
@@ -87,7 +97,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun createPlaceMarkers() {
         for (place in places as List<Place>) {
-            mMap?.addMarker(MarkerOptions().position(place.location()).title(place.name))
+            val location = place.location()
+            mMap?.addMarker(MarkerOptions().position(location).title(place.name))
+            positionPlace[location] = place
         }
     }
 
@@ -108,6 +120,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         if (places != null) {
             createPlaceMarkers()
         }
+
+        // add onclick listeners
+        mMap?.setOnMarkerClickListener {
+            placeSelected(positionPlace[it.position])
+            true
+        }
+    }
+
+    private fun placeSelected(place: Place?) {
+        if (place == null) {
+            return
+        }
+
+        PlaceViewActivity.launchForView(this, place.id)
     }
 
     companion object {
