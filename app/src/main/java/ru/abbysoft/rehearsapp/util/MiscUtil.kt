@@ -1,10 +1,13 @@
 package ru.abbysoft.rehearsapp.util
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.widget.EditText
 import ru.abbysoft.rehearsapp.R
 
+const val PICK_IMAGE = 0
 
 fun showErrorMessage(message: String, context: Context) {
     AlertDialog.Builder(context)
@@ -24,6 +27,12 @@ fun EditText.validateThatNotBlank() : Boolean {
     return true
 }
 
-fun getRestBase() : String {
-    return "http://80.78.254.138:8080/"
+fun pickImage(activity: Activity) {
+    val intent = Intent().apply {
+        type = "image/*"
+        action = Intent.ACTION_GET_CONTENT
+    }
+
+    activity.startActivityForResult(intent, PICK_IMAGE)
 }
+

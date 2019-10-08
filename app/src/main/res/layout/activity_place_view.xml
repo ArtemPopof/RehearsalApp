@@ -39,8 +39,7 @@
                     android:id="@+id/place_header_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:bitmap="@{background}"
-                    android:src="@drawable/ic_launcher_foreground" />
+                    app:bitmap="@{background}" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -55,13 +54,14 @@
         <include layout="@layout/content_place_view" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/change_header_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="#009688"
             app:layout_anchor="@id/app_bar"
             app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@android:drawable/stat_notify_chat" />
+            app:srcCompat="@android:drawable/ic_menu_camera" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

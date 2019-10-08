@@ -106,4 +106,5 @@
     <string name="areaM2">%1.2f m2</string>
     <string name="priceFrom">from %1.2f $</string>
     <string name="cannot_load_places">Cannot load places, check internet connection</string>
+    <string name="error_loading_image">Error loading image</string>
 </resources>

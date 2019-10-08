@@ -1,11 +1,16 @@
 package ru.abbysoft.rehearsapp.place
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
 import kotlinx.android.synthetic.main.activity_place_view.*
@@ -15,7 +20,7 @@ import ru.abbysoft.rehearsapp.databinding.ActivityPlaceViewBinding
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.room.RoomCardFragment
-import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
+import ru.abbysoft.rehearsapp.util.*
 import java.lang.IllegalArgumentException
 
 const val PLACE_ID_EXTRA = "PlaceidExtra"
@@ -31,9 +36,8 @@ class PlaceViewActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_place_view)
 
         setSupportActionBar(toolbar)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        change_header_fab.setOnClickListener { view ->
+            pickImage(this)
         }
 
         configureActivity(getIdFromIntent())
@@ -78,5 +82,31 @@ class PlaceViewActivity : AppCompatActivity() {
             intent.putExtra(PLACE_ID_EXTRA, id)
             context.startActivity(intent)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode != PICK_IMAGE) {
+            return
+        }
+
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            headerImageLoaded(data)
+        } else {
+            showErrorMessage(getString(R.string.error_loading_image), this)
+        }
+    }
+
+    private fun headerImageLoaded(intent: Intent) {
+        if (intent.data == null) {
+            return
+        }
+        val stream = contentResolver.openInputStream(intent.data as Uri)
+        var bitmap = BitmapFactory.decodeStream(stream)
+        bitmap = shrinkWithProportion(bitmap, width = place_header_image.width)
+        bitmap = cropImage(bitmap, place_header_image.width, place_header_image.height)
+
+        binding.background = bitmap
     }
 }
