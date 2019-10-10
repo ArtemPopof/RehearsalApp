@@ -30,6 +30,9 @@ class PlaceViewActivity : AppCompatActivity() {
     val TAG = PlaceViewActivity::class.java.name
 
     lateinit var binding : ActivityPlaceViewBinding
+    var place: Place? = null
+
+    var id: Long? = -1L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,8 @@ class PlaceViewActivity : AppCompatActivity() {
     }
 
     private fun configureActivity(id : Long) {
+        this.id = id
+
         AsyncServiceRequest(
             Consumer<Place> {
                 placeLoaded(it)
@@ -65,6 +70,7 @@ class PlaceViewActivity : AppCompatActivity() {
 
     private fun placeLoaded(place: Place) {
         binding.placeName = place.name
+        this.place = place
 
         configureRoomFragments(place)
     }
@@ -108,5 +114,36 @@ class PlaceViewActivity : AppCompatActivity() {
         bitmap = cropImage(bitmap, place_header_image.width, place_header_image.height)
 
         binding.background = bitmap
+
+        saveImageToServer(bitmap.toByteArray(),
+            Consumer {
+            // update place info with new header image
+                updateImage(id, it)
+            },
+            Runnable {
+                showErrorMessage( getString(R.string.cannot_upload_header_image), this)
+            })
+    }
+
+    private fun updateImage(id: Long?, headerId: String) {
+        if (id == null) {
+            return
+        }
+
+        val updatedPlace = place?.apply { headerImageId = fromStringToImageId(headerId) }
+
+        AsyncServiceRequest(
+            Consumer<Boolean>{
+                if (!it) {
+                    Log.e(TAG, "Cannot save headerImage, server error")
+                } else {
+                    Log.i(TAG, "Image updated")
+                }
+            },
+            Consumer {
+                showErrorMessage(getString(R.string.cannot_upload_header_image), this)
+            }
+        ).execute(ServiceFactory.getDatabaseService()
+            .updatePlace(updatedPlace as Place))
     }
 }

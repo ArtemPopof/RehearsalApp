@@ -1,13 +1,10 @@
 package ru.abbysoft.rehearsapp.rest
 
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import ru.abbysoft.rehearsapp.model.Place
 
-interface DatabaseService {
+interface PlaceService {
 
     @GET("/place/{id}/")
     fun getPlace(@Path("id") id: Long) : Call<Place>
@@ -17,4 +14,11 @@ interface DatabaseService {
 
     @POST("/place/add/")
     fun addPlace(@Body place: Place) : Call<Long>
+
+    @PUT("/place/update/")
+    fun updatePlace(@Body place: Place) : Call<Boolean>
+
+    @PATCH("/place/{id}/")
+    fun patchPlace(@Path("id") id: Long, @Body fields: Map<String, @JvmSuppressWildcards Any>): Call<Boolean>
 }
+

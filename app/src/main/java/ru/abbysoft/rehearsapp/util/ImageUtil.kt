@@ -1,7 +1,7 @@
 package ru.abbysoft.rehearsapp.util
 
 import android.graphics.Bitmap
-import kotlin.math.floor
+import java.io.ByteArrayOutputStream
 
 fun cropImage(bitmap: Bitmap, width: Int, height: Int) : Bitmap {
     return Bitmap.createBitmap(bitmap, 0, 0, width, height)
@@ -23,4 +23,11 @@ fun shrinkWithProportion(bitmap: Bitmap, height: Int = 0, width: Int = 0) : Bitm
 
     return Bitmap.createScaledBitmap(bitmap,
         (bitmap.width * coeff).toInt(), (bitmap.height * coeff).toInt(), true)
+}
+
+fun Bitmap.toByteArray(): ByteArray {
+    val stream = ByteArrayOutputStream()
+
+    compress(Bitmap.CompressFormat.WEBP, 100, stream)
+    return stream.toByteArray()
 }

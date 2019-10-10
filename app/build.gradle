@@ -41,7 +41,7 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'ru.abbysoft.rehearsapp:model:0.0.2-SNAPSHOT'
+    implementation 'ru.abbysoft.rehearsapp:model:0.0.3-SNAPSHOT'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
 
     testImplementation 'junit:junit:4.12'

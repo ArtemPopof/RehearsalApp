@@ -1,7 +1,6 @@
 package ru.abbysoft.rehearsapp.rest
 
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.IllegalStateException
 
 class ServiceFactory private constructor(baseUrl: String) {
 
@@ -10,14 +9,12 @@ class ServiceFactory private constructor(baseUrl: String) {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private var databaseService: DatabaseService
+    var databaseService: PlaceService
+    var imageService: ImageService
 
     init {
-        databaseService = retrofit.create(DatabaseService::class.java)
-    }
-
-    private fun getDatabaseService() : DatabaseService {
-        return databaseService
+        databaseService = retrofit.create(PlaceService::class.java)
+        imageService = retrofit.create(ImageService::class.java)
     }
 
     companion object {
@@ -28,12 +25,20 @@ class ServiceFactory private constructor(baseUrl: String) {
             instance = ServiceFactory(baseUrl)
         }
 
-        fun getDatabaseService() : DatabaseService {
-            if (instance == null) {
-                throw IllegalStateException("Must call init() method first to init service")
-            }
+        fun getDatabaseService() : PlaceService {
+            checkInstance()
 
-            return instance?.getDatabaseService() as DatabaseService
+            return instance?.databaseService as PlaceService
+        }
+
+        private fun checkInstance() {
+            checkNotNull(instance) { "Must call init() method first to init service" }
+        }
+
+        fun getImageService() : ImageService {
+            checkInstance()
+
+            return instance?.imageService as ImageService
         }
     }
 }
