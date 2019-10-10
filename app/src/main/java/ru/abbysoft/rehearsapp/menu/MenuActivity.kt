@@ -38,8 +38,8 @@ class MenuActivity : AppCompatActivity() {
     private fun getRandomId(places: List<Place>) : Long {
         val rand = Random(System.currentTimeMillis())
 
-        val randIndex = rand.nextInt(places.lastIndex)
-        return places.get(randIndex).id
+        val randIndex = rand.nextInt(places.size)
+        return places[randIndex].id
     }
 
     fun onAddNewPlaceClicked(view : View) {

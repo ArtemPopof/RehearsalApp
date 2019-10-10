@@ -42,6 +42,10 @@ fun Bitmap.toByteArray(): ByteArray {
 }
 
 fun loadBitmapOrNull(place: Place, bitmapConsumer: Consumer<Bitmap>, context: Context) {
+    if (place.headerImageId == -1L) {
+        return
+    }
+
     val call = ServiceFactory.getImageService().getImage(longIdToString(place.headerImageId))
 
     AsyncServiceRequest(
