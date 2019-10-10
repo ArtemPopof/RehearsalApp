@@ -70,6 +70,7 @@ class PlaceViewActivity : AppCompatActivity() {
 
     private fun placeLoaded(place: Place) {
         binding.placeName = place.name
+        loadBitmapOrNull(place, Consumer {binding.background = it}, this)
         this.place = place
 
         configureRoomFragments(place)
