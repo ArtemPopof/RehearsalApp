@@ -8,6 +8,8 @@ import android.os.AsyncTask
 import android.widget.EditText
 import androidx.core.util.Consumer
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 
 const val PICK_IMAGE = 0
@@ -59,4 +61,17 @@ class ImageLoader(private val failCallback: Runnable?, private val onSuccess: Co
         failCallback?.run()
     }
 
+}
+
+fun getRoomFromPlace(index: Int, place: Place?): Room? {
+    return place?.getRoom(index)
+}
+
+fun Place.getRoom(index: Int): Room? {
+    val lastIndex = rooms.lastIndex
+    if (lastIndex < index) {
+        return null
+    }
+
+    return rooms[index]
 }

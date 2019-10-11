@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.databinding.RoomCardBinding
+import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
 
 

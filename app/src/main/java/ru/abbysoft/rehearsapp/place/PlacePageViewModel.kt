@@ -9,6 +9,12 @@ class PlacePageViewModel : ViewModel() {
     var place : Place? = null
 
     fun getRoom(index: Int) : Room? {
+        val lastIndex = place?.rooms?.lastIndex
+
+        if (lastIndex == null || lastIndex < index) {
+            return null
+        }
+
         return place?.rooms?.get(index)
     }
 }

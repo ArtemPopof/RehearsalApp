@@ -41,12 +41,4 @@ object BindingAdapters {
     fun area(text: TextView, area: Float) {
         text.text = text.context.getString(R.string.areaM2, area)
     }
-//
-//    @JvmStatic
-//    @BindingAdapter("app:room")
-//    fun room(view: View, room: Room) {
-//        //card.setRoom(room)
-//        val card = view as RoomCardView
-//        card.setRoom(room)
-//    }
 }

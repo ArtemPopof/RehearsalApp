@@ -7,6 +7,8 @@
         <variable
             name="place"
             type="ru.abbysoft.rehearsapp.model.Place" />
+
+        <import type="ru.abbysoft.rehearsapp.util.MiscUtilKt"/>
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -45,7 +47,7 @@
 
             <ru.abbysoft.rehearsapp.component.RoomCardView
                 android:id="@+id/first_room_card"
-                app:room="@{place.rooms.get(0)}"
+                app:room="@{MiscUtilKt.getRoomFromPlace(0, place)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </ru.abbysoft.rehearsapp.component.RoomCardView>
@@ -58,7 +60,7 @@
 
             <ru.abbysoft.rehearsapp.component.RoomCardView
                 android:id="@+id/second_room_card"
-                app:room="@{place.rooms.get(1)}"
+                app:room="@{MiscUtilKt.getRoomFromPlace(1, place)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </ru.abbysoft.rehearsapp.component.RoomCardView>
@@ -71,7 +73,7 @@
 
             <ru.abbysoft.rehearsapp.component.RoomCardView
                 android:id="@+id/third_room_card"
-                app:room="@{place.rooms.get(2)}"
+                app:room="@{MiscUtilKt.getRoomFromPlace(2, place)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </ru.abbysoft.rehearsapp.component.RoomCardView>

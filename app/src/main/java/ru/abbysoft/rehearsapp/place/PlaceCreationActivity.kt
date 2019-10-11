@@ -79,13 +79,6 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
         place.position = location.toString()
         place.name = nameField.text.toString()
 
-        // Todo remove, only for test
-        val rooms = place.rooms as ArrayList<Room>
-        rooms.add(Room(-1, "Room Red", 24.5f, 2f))
-        rooms.add(Room(-1, "Room VIP", 44.5f, 4.2f))
-        rooms.add(Room(-1, "Room GOLD", 74.55f, 6.9f))
-        //
-
         if (lastCreatedPlace != null) {
             //editExisting(CacheFactory.getDefaultCacheInstance().getPlace(lastCreatedPlace as Long),location)
             addPlace(place)

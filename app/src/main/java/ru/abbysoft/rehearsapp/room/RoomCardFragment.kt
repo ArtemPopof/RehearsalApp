@@ -10,6 +10,7 @@ import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.databinding.RoomCardBinding
 import ru.abbysoft.rehearsapp.model.Room
 
+@Deprecated("todelete")
 class RoomCardFragment : Fragment() {
 
     lateinit var binding: RoomCardBinding
