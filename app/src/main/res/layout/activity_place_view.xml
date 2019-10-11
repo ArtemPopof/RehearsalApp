@@ -8,8 +8,8 @@
             name="background"
             type="android.graphics.Bitmap" />
         <variable
-            name="placeName"
-            type="String" />
+            name="place"
+            type="ru.abbysoft.rehearsapp.model.Place" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:title="@{placeName}"
+                app:title="@{place.name}"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
@@ -51,7 +51,7 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/content_place_view" />
+        <include layout="@layout/content_place_view" app:place="@{place}"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/change_header_fab"

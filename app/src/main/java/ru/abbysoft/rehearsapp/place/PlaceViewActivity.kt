@@ -30,7 +30,6 @@ class PlaceViewActivity : AppCompatActivity() {
     val TAG = PlaceViewActivity::class.java.name
 
     lateinit var binding : ActivityPlaceViewBinding
-    var place: Place? = null
 
     var id: Long? = -1L
 
@@ -69,18 +68,8 @@ class PlaceViewActivity : AppCompatActivity() {
     }
 
     private fun placeLoaded(place: Place) {
-        binding.placeName = place.name
+        binding.place = place
         loadBitmapOrNull(place, Consumer {binding.background = it}, this)
-        this.place = place
-
-        configureRoomFragments(place)
-    }
-
-    private fun configureRoomFragments(place: Place) {
-        val roomCards = this.supportFragmentManager.fragments
-        for (i in place.rooms.indices) {
-            (roomCards[i] as RoomCardFragment).setRoom(place.rooms[i])
-        }
     }
 
     companion object {
@@ -131,7 +120,7 @@ class PlaceViewActivity : AppCompatActivity() {
             return
         }
 
-        val updatedPlace = place?.apply { headerImageId = fromStringToImageId(headerId) }
+        val updatedPlace = binding.place?.apply { headerImageId = fromStringToImageId(headerId) }
 
         AsyncServiceRequest(
             Consumer<Boolean>{

@@ -7,9 +7,6 @@
         <variable
             name="room"
             type="ru.abbysoft.rehearsapp.model.Room" />
-        <variable
-            name="context"
-            type="android.content.Context" />
     </data>
 
     <LinearLayout

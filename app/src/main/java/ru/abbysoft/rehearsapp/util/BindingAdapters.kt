@@ -1,11 +1,14 @@
 package ru.abbysoft.rehearsapp.util
 
 import android.graphics.Bitmap
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.component.RoomCardView
+import ru.abbysoft.rehearsapp.model.Room
 
 object BindingAdapters {
     @JvmStatic
@@ -38,4 +41,12 @@ object BindingAdapters {
     fun area(text: TextView, area: Float) {
         text.text = text.context.getString(R.string.areaM2, area)
     }
+//
+//    @JvmStatic
+//    @BindingAdapter("app:room")
+//    fun room(view: View, room: Room) {
+//        //card.setRoom(room)
+//        val card = view as RoomCardView
+//        card.setRoom(room)
+//    }
 }

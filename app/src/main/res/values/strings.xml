@@ -109,4 +109,5 @@
     <string name="error_loading_image">Error loading image</string>
     <string name="cannot_upload_header_image">Cannot update header image, try again</string>
     <string name="cannot_retrieve_data">Cannot retrieve some data</string>
+    <string name="rooms">Rooms</string>
 </resources>

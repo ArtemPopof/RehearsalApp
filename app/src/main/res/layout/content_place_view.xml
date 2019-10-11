@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="model"
-            type="ru.abbysoft.rehearsapp.place.PlacePageViewModel" />
+            name="place"
+            type="ru.abbysoft.rehearsapp.model.Place" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -28,20 +28,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="0"
-                    android:text="4"
-                    android:textSize="30sp" />
-
-                <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Rooms"
+                    android:text="@string/rooms"
                     android:textSize="30sp" />
 
             </LinearLayout>
@@ -52,12 +43,12 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <fragment
+            <ru.abbysoft.rehearsapp.component.RoomCardView
                 android:id="@+id/first_room_card"
-                android:name="ru.abbysoft.rehearsapp.room.RoomCardFragment"
+                app:room="@{place.rooms.get(0)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </fragment>
+            </ru.abbysoft.rehearsapp.component.RoomCardView>
 
             <View
                 android:id="@+id/divider"
@@ -65,12 +56,12 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <fragment
+            <ru.abbysoft.rehearsapp.component.RoomCardView
                 android:id="@+id/second_room_card"
-                android:name="ru.abbysoft.rehearsapp.room.RoomCardFragment"
+                app:room="@{place.rooms.get(1)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </fragment>
+            </ru.abbysoft.rehearsapp.component.RoomCardView>
 
             <View
                 android:id="@+id/divider2"
@@ -78,12 +69,12 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <fragment
+            <ru.abbysoft.rehearsapp.component.RoomCardView
                 android:id="@+id/third_room_card"
-                android:name="ru.abbysoft.rehearsapp.room.RoomCardFragment"
+                app:room="@{place.rooms.get(2)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </fragment>
+            </ru.abbysoft.rehearsapp.component.RoomCardView>
 
             <View
                 android:id="@+id/divider4"

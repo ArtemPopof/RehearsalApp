@@ -23,8 +23,6 @@ class RoomCardFragment : Fragment() {
         binding = DataBindingUtil
             .inflate(inflater, R.layout.room_card, container, false)
 
-        binding.context = context
-
         return binding.root
     }
 
