@@ -111,4 +111,8 @@
     <string name="cannot_retrieve_data">Cannot retrieve some data</string>
     <string name="rooms">Rooms</string>
     <string name="add_room">Add room</string>
+    <string name="type_room_name">Type room name</string>
+    <string name="room_photos">Room photos</string>
+    <string name="price">Price</string>
+    <string name="area">Area</string>
 </resources>
