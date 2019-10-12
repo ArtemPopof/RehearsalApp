@@ -115,4 +115,7 @@
     <string name="room_photos">Room photos</string>
     <string name="price">Price</string>
     <string name="area">Area</string>
+    <string name="failed_to_add_room">Failed to add room!</string>
+    <string name="new_room">New Room</string>
+    <string name="cannot_save_room">Cannot save room</string>
 </resources>

@@ -3,35 +3,33 @@ package ru.abbysoft.rehearsapp.place
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
 import kotlinx.android.synthetic.main.activity_place_view.*
 import ru.abbysoft.rehearsapp.R
-import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceViewBinding
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
-import ru.abbysoft.rehearsapp.room.RoomCardFragment
+import ru.abbysoft.rehearsapp.room.ROOM_EXTRA
+import ru.abbysoft.rehearsapp.room.RoomCreationActivity
 import ru.abbysoft.rehearsapp.util.*
 import java.lang.IllegalArgumentException
 
 const val PLACE_ID_EXTRA = "PlaceidExtra"
+const val ROOM_REQUEST = 1
 
 class PlaceViewActivity : AppCompatActivity() {
 
-    val TAG = PlaceViewActivity::class.java.name
+    private val TAG = PlaceViewActivity::class.java.name
 
-    lateinit var binding : ActivityPlaceViewBinding
+    private lateinit var binding : ActivityPlaceViewBinding
 
     var id: Long? = -1L
 
@@ -85,14 +83,29 @@ class PlaceViewActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode != PICK_IMAGE) {
-            return
-        }
+        val success = resultCode == Activity.RESULT_OK
 
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            headerImageLoaded(data)
-        } else {
+        when (requestCode) {
+            PICK_IMAGE -> headerImageResult(data, success)
+            ROOM_REQUEST -> roomRequestResult(data, success)
+        }
+    }
+
+    private fun headerImageResult(data: Intent?, success: Boolean) {
+        if (data == null || !success) {
             showErrorMessage(getString(R.string.error_loading_image), this)
+        } else {
+            headerImageLoaded(data)
+        }
+    }
+
+    private fun roomRequestResult(data: Intent?, success: Boolean) {
+        if (data == null || !success) {
+            showErrorMessage(getString(R.string.failed_to_add_room), this)
+        } else {
+            // TODO cache
+            val roomId = data.extras?.getLong(ROOM_EXTRA) ?: return
+            getRoomFromCache(roomId, Consumer { roomAdded(it) })
         }
     }
 
@@ -140,21 +153,14 @@ class PlaceViewActivity : AppCompatActivity() {
     }
 
     fun addNewRoom(view: View) {
-        val room = Room().apply {
-            id = 5
-            area = 5.5f
-            name = "Super Room"
-            price = 100f
-        }
-
-        Log.d(TAG, "Trying to add new room $room")
-
-        val place = binding.place as Place
-        val rooms = place.rooms
-        place.rooms = add(rooms, room)
-
-        binding.place = place
-
-        updatePlaceAsync(place, "Failed to add new room", this)
+        launchActivityForResult(this, RoomCreationActivity::class.java, ROOM_REQUEST)
     }
+
+    private fun roomAdded(room: Room) {
+        val place = binding.place as Place
+        place.rooms = add(place.rooms, room)
+        updatePlaceAsync(place, "Failed to add new room", this)
+        binding.place = place
+    }
+
 }

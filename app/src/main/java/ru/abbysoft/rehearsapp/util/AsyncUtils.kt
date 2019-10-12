@@ -6,15 +6,17 @@ import android.util.Log
 import androidx.core.util.Consumer
 import retrofit2.Call
 import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.lang.Exception
+import java.lang.IllegalStateException
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
                                    private val failCallback: Consumer<Exception>? = null,
-                                   private val timeoutSec: Long = 10L) : AsyncTask<Call<T>, T, Nothing>() {
+                                   private val timeoutSec: Long = 10L) : AsyncTask<Call<T>, Any, Any>() {
 
     private var exception: Exception? = null
 
@@ -82,4 +84,19 @@ fun updatePlaceAsync(place: Place, errorMessage: String, context: Context) {
         Consumer<Boolean> { if (!it) showErrorMessage(errorMessage, context); },
         Consumer { showErrorMessage(errorMessage, context) }
     ).execute(ServiceFactory.getDatabaseService().updatePlace(place))
+}
+
+fun <T: Any> saveAsync(entity: Any, callback: Consumer<T>, errorMessage: String, context: Context) {
+    AsyncServiceRequest(
+        Consumer<T> { callback.accept(it) },
+        Consumer { showErrorMessage(errorMessage, context) }
+    ).execute(getCall(entity) as Call<T>)
+}
+
+fun getCall(entity: Any): Call<*> {
+    when (entity) {
+        is Room -> return ServiceFactory.getDatabaseService().saveRoom(entity)
+    }
+
+    throw IllegalStateException("not realised another options")
 }

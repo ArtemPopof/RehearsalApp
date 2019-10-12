@@ -82,3 +82,15 @@ fun <T> add(list: List<T>, element: T): List<T> {
     newList.add(element)
     return newList
 }
+
+fun <T: Activity> launchActivity(fromActivity: Activity, toActivity: Class<T>) {
+    val intent = Intent(fromActivity, toActivity)
+    fromActivity.startActivity(intent)
+}
+
+fun <T: Activity> launchActivityForResult(
+    fromActivity: Activity, toActivity: Class<T>, request: Int) {
+
+    val intent = Intent(fromActivity, toActivity)
+    fromActivity.startActivityForResult(intent, request)
+}
