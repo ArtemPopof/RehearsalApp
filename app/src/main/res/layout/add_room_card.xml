@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:onClick="addNewRoom">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/add_room_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/add_room"
+            android:scaleType="fitStart"
+            android:src="@android:drawable/ic_menu_add" />
+
+        <TextView
+            android:id="@+id/add_room_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/add_room"
+            android:textSize="36sp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+

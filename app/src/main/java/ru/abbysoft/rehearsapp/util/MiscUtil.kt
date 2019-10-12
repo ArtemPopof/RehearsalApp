@@ -75,3 +75,10 @@ fun Place.getRoom(index: Int): Room? {
 
     return rooms[index]
 }
+
+fun <T> add(list: List<T>, element: T): List<T> {
+    val newList = ArrayList<T>(list.size + 5)
+    newList.addAll(list)
+    newList.add(element)
+    return newList
+}

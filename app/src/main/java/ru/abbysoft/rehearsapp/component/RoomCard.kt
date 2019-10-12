@@ -35,6 +35,11 @@ class RoomCardView : FrameLayout {
     }
 
     fun setRoom(room: Room?) {
+        if (room == null) {
+            this.visibility = View.GONE
+        } else {
+            this.visibility = View.VISIBLE
+        }
         binding?.room = room
     }
 }

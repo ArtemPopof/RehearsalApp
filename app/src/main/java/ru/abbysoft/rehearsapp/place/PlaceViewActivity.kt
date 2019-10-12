@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,6 +19,7 @@ import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceViewBinding
 import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.room.RoomCardFragment
 import ru.abbysoft.rehearsapp.util.*
@@ -135,5 +137,24 @@ class PlaceViewActivity : AppCompatActivity() {
             }
         ).execute(ServiceFactory.getDatabaseService()
             .updatePlace(updatedPlace as Place))
+    }
+
+    fun addNewRoom(view: View) {
+        val room = Room().apply {
+            id = 5
+            area = 5.5f
+            name = "Super Room"
+            price = 100f
+        }
+
+        Log.d(TAG, "Trying to add new room $room")
+
+        val place = binding.place as Place
+        val rooms = place.rooms
+        place.rooms = add(rooms, room)
+
+        binding.place = place
+
+        updatePlaceAsync(place, "Failed to add new room", this)
     }
 }

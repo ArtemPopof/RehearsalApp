@@ -1,6 +1,7 @@
 package ru.abbysoft.rehearsapp.util
 
 import android.graphics.Bitmap
+import android.opengl.Visibility
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -40,5 +41,15 @@ object BindingAdapters {
     @BindingAdapter("app:area")
     fun area(text: TextView, area: Float) {
         text.text = text.context.getString(R.string.areaM2, area)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:hide")
+    fun hide(view: View, boolean: Boolean) {
+        if (boolean) {
+            view.visibility = View.GONE
+        } else {
+            view.visibility = View.VISIBLE
+        }
     }
 }

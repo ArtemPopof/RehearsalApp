@@ -84,6 +84,8 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
+            <include layout="@layout/add_room_card"/>
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"

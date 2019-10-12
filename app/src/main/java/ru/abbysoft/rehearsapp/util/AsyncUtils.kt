@@ -1,9 +1,12 @@
 package ru.abbysoft.rehearsapp.util
 
+import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import androidx.core.util.Consumer
 import retrofit2.Call
+import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.lang.Exception
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -72,4 +75,11 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
     }
 
     class RestServiceException(message: String) : Exception(message)
+}
+
+fun updatePlaceAsync(place: Place, errorMessage: String, context: Context) {
+    AsyncServiceRequest(
+        Consumer<Boolean> { if (!it) showErrorMessage(errorMessage, context); },
+        Consumer { showErrorMessage(errorMessage, context) }
+    ).execute(ServiceFactory.getDatabaseService().updatePlace(place))
 }
