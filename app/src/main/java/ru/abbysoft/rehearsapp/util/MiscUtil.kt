@@ -94,3 +94,7 @@ fun <T: Activity> launchActivityForResult(
     val intent = Intent(fromActivity, toActivity)
     fromActivity.startActivityForResult(intent, request)
 }
+
+fun imageUrl(url: String): String {
+    return "$baseUrl/image/$url"
+}
