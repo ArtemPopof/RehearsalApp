@@ -8,11 +8,13 @@ import android.view.View
 import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.smarteist.autoimageslider.IndicatorAnimations
+import com.smarteist.autoimageslider.SliderAnimations
 import kotlinx.android.synthetic.main.activity_room_creation.*
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.component.PhotoSliderAdapter
 import ru.abbysoft.rehearsapp.databinding.ActivityRoomCreationBinding
 import ru.abbysoft.rehearsapp.model.Room
-import ru.abbysoft.rehearsapp.place.ROOM_REQUEST
 import ru.abbysoft.rehearsapp.util.saveAsync
 import ru.abbysoft.rehearsapp.util.validateThatNotBlank
 
@@ -27,6 +29,7 @@ class RoomCreationActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_room_creation)
         configureModel()
+        configureGallery()
     }
 
     private fun configureModel() {
@@ -35,6 +38,10 @@ class RoomCreationActivity : AppCompatActivity() {
         model.name.value = getString(R.string.new_room)
         model.area.value = "0"
         model.price.value = "0"
+    }
+
+    private fun configureGallery() {
+        imageSlider.sliderAdapter = PhotoSliderAdapter(this)
     }
 
     fun save(view: View) {
