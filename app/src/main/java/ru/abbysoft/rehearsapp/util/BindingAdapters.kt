@@ -1,14 +1,18 @@
 package ru.abbysoft.rehearsapp.util
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.opengl.Visibility
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.util.Consumer
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.component.RoomCardView
+import ru.abbysoft.rehearsapp.model.Image
 import ru.abbysoft.rehearsapp.model.Room
 
 object BindingAdapters {
@@ -20,6 +24,20 @@ object BindingAdapters {
             return
         }
         view.setImageBitmap(bitmap)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:bitmapAsync")
+    fun bitmapAsync(view: ImageView, image: Image?) {
+        if (image == null) return
+        view.context.loadImageDataAsync(image.name, Consumer { view.setToView(it) })
+    }
+
+    private fun ImageView.setToView(data: ByteArray) {
+        Glide.with(this.context)
+            .load(data)
+            .centerCrop()
+            .into(this)
     }
 
     @JvmStatic
@@ -52,4 +70,5 @@ object BindingAdapters {
             view.visibility = View.VISIBLE
         }
     }
+
 }

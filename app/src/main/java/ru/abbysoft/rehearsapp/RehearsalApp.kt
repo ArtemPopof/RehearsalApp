@@ -24,7 +24,6 @@ class RehearsalApp : Application() {
         super.onCreate()
 
         initRestService()
-        generateTestData()
 
         AsyncServiceRequest(
             Consumer<List<Place>> { logAllPlaces(it) },
@@ -45,17 +44,4 @@ class RehearsalApp : Application() {
         ServiceFactory.init(baseUrl)
     }
 
-    private fun generateTestData() {
-        // inflate test data
-//        val cache = CacheFactory.getDefaultCacheInstance()
-//        cache.addPlace(
-//            Place(
-//                "SoundBase", getCurrentLocation(),
-//                getImageFromWeb("https://repa24.ru/images/bases/89/1862.jpg")
-//            )
-//        )
-//        cache.addPlace(Place("CloudBase", getImageFromWeb("https://repa24.ru/images/bases/14/329.jpg")))
-//        cache.addPlace(Place("Good Place", getImageFromWeb("https://repa24.ru/images/bases/26/568.jpg")))
-//        cache.addPlace(Place("Don't go here", getImageFromWeb("https://www.studiorent.ru/upload_data/4808/upldEbXvAL.jpg")))
-    }
 }

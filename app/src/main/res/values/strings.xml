@@ -120,4 +120,6 @@
     <string name="cannot_save_room">Cannot save room</string>
     <string name="image">image</string>
     <string name="add_photo">Add photo</string>
+    <string name="failed_to_save">Failed to save photo to server</string>
+    <string name="cannot_load_image">Cannot load image</string>
 </resources>

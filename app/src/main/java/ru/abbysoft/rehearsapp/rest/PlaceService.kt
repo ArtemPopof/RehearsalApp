@@ -25,6 +25,9 @@ interface PlaceService {
     @PUT("/place/update/")
     fun updatePlace(@Body place: Place) : Call<Boolean>
 
+    @PUT("/room/{id}/")
+    fun updateRoom(@Path("id") id: Long, @Body room: Room): Call<Boolean>
+
     @PATCH("/place/{id}/")
     fun patchPlace(@Path("id") id: Long, @Body fields: Map<String, @JvmSuppressWildcards Any>): Call<Boolean>
 }

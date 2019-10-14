@@ -7,16 +7,16 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
-fun getImageFromWeb(path: String): Bitmap? {
-    val bitmap = ImageDownloader().execute(path)
-        ?: null
+//fun getImageFromWeb(path: String): Bitmap? {
+//    val bitmap = ImageDownloader().execute(path)
+//        ?: null
+//
+//    return bitmap?.get()
+//}
 
-    return bitmap?.get()
-}
+private class ImageDownloader : AsyncTask<String, Int, ByteArray>() {
 
-private class ImageDownloader : AsyncTask<String, Int, Bitmap>() {
-
-    override fun doInBackground(vararg path: String?): Bitmap? {
+    override fun doInBackground(vararg path: String?): ByteArray? {
         if (path.isEmpty()) {
             return null
         }
@@ -27,11 +27,11 @@ private class ImageDownloader : AsyncTask<String, Int, Bitmap>() {
             connection.doInput = true
             connection.connect()
             val input = connection.inputStream
-            BitmapFactory.decodeStream(input)
+            input.readBytes()
         } catch (e: IOException) {
             // Log exception
             e.printStackTrace()
-            return null
+            null
         }
     }
 

@@ -4,13 +4,16 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.AsyncTask
+import android.util.Log
 import android.widget.EditText
 import androidx.core.util.Consumer
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
+import java.lang.IllegalStateException
 
 const val PICK_IMAGE = 0
 
@@ -41,26 +44,41 @@ fun pickImage(activity: Activity) {
     activity.startActivityForResult(intent, PICK_IMAGE)
 }
 
+fun handlePickImageResult(data: Intent?, consumer: Consumer<Uri>, context: Context) {
+    if (data?.data == null) {
+        Log.e("ImagePicker", "Cannot load picked image")
+        showErrorMessage("Cannot load picked image", context)
+    } else {
+        consumer.accept(data.data)
+    }
+
+}
+
 fun saveImageToServer(bytes: ByteArray, onResult: Consumer<String>, onFail: Runnable? = null) {
     ImageLoader(onFail,  onResult).execute(bytes)
 }
 
 class ImageLoader(private val failCallback: Runnable?, private val onSuccess: Consumer<String>)
-    : AsyncTask<ByteArray, Void, Unit>() {
+    : AsyncTask<ByteArray, Void, String>() {
 
-    override fun doInBackground(vararg args: ByteArray) {
+    override fun doInBackground(vararg args: ByteArray): String {
         val response = ServiceFactory.getImageService().addPlace(args[0]).execute().body()
         if (response?.imageId == null) {
             cancel(true)
         } else {
-            onSuccess.accept(response.imageId)
+            return response.imageId as String
         }
+
+        throw IllegalStateException("Look to the code")
     }
 
     override fun onCancelled() {
         failCallback?.run()
     }
 
+    override fun onPostExecute(result: String?) {
+        onSuccess.accept(result as String)
+    }
 }
 
 fun getRoomFromPlace(index: Int, place: Place?): Room? {
@@ -96,5 +114,5 @@ fun <T: Activity> launchActivityForResult(
 }
 
 fun imageUrl(url: String): String {
-    return "$baseUrl/image/$url"
+    return "$baseUrl/image/$url.jpeg"
 }

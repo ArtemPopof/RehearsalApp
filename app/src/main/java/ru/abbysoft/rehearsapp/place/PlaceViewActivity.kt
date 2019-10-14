@@ -84,18 +84,13 @@ class PlaceViewActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         val success = resultCode == Activity.RESULT_OK
+        if (!success) {
+            return
+        }
 
         when (requestCode) {
-            PICK_IMAGE -> headerImageResult(data, success)
+            PICK_IMAGE -> handlePickImageResult(data, Consumer { headerImageLoaded(it) }, this)
             ROOM_REQUEST -> roomRequestResult(data, success)
-        }
-    }
-
-    private fun headerImageResult(data: Intent?, success: Boolean) {
-        if (data == null || !success) {
-            showErrorMessage(getString(R.string.error_loading_image), this)
-        } else {
-            headerImageLoaded(data)
         }
     }
 
@@ -109,11 +104,8 @@ class PlaceViewActivity : AppCompatActivity() {
         }
     }
 
-    private fun headerImageLoaded(intent: Intent) {
-        if (intent.data == null) {
-            return
-        }
-        val stream = contentResolver.openInputStream(intent.data as Uri)
+    private fun headerImageLoaded(data: Uri) {
+        val stream = contentResolver.openInputStream(data)
         var bitmap = BitmapFactory.decodeStream(stream)
         bitmap = shrinkWithProportion(bitmap, width = place_header_image.width)
         bitmap = cropImage(bitmap, place_header_image.width, place_header_image.height)
@@ -135,7 +127,7 @@ class PlaceViewActivity : AppCompatActivity() {
             return
         }
 
-        val updatedPlace = binding.place?.apply { headerImageId = fromStringToImageId(headerId) }
+        val updatedPlace = binding.place?.apply { headerImageId = headerId }
 
         AsyncServiceRequest(
             Consumer<Boolean>{

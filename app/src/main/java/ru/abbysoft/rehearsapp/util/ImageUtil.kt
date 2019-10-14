@@ -5,10 +5,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.core.util.Consumer
-import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.io.ByteArrayOutputStream
+import android.os.Environment
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
+
 
 private const val TAG = "ImageUtils"
 
@@ -37,16 +41,16 @@ fun shrinkWithProportion(bitmap: Bitmap, height: Int = 0, width: Int = 0) : Bitm
 fun Bitmap.toByteArray(): ByteArray {
     val stream = ByteArrayOutputStream()
 
-    compress(Bitmap.CompressFormat.WEBP, 100, stream)
+    compress(Bitmap.CompressFormat.JPEG, 100, stream)
     return stream.toByteArray()
 }
 
 fun loadBitmapOrNull(place: Place, bitmapConsumer: Consumer<Bitmap>, context: Context) {
-    if (place.headerImageId == -1L) {
+    if (place.headerImageId.isNullOrBlank()) {
         return
     }
 
-    val call = ServiceFactory.getImageService().getImage(longIdToString(place.headerImageId))
+    val call = ServiceFactory.getImageService().getImage(place.headerImageId)
 
     AsyncServiceRequest(
         Consumer<ByteArray> {
@@ -55,7 +59,7 @@ fun loadBitmapOrNull(place: Place, bitmapConsumer: Consumer<Bitmap>, context: Co
         Consumer {
             Log.e(TAG, it.toString())
             it.printStackTrace()
-            showErrorMessage(context.getString(R.string.cannot_retrieve_data), context)
+            showErrorMessage(context.getString(ru.abbysoft.rehearsapp.R.string.cannot_retrieve_data), context)
         }
     ).execute(call)
 }

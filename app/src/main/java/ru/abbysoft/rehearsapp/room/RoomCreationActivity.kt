@@ -2,6 +2,8 @@ package ru.abbysoft.rehearsapp.room
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,16 +14,17 @@ import kotlinx.android.synthetic.main.activity_room_creation.*
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.component.PhotoSliderAdapter
 import ru.abbysoft.rehearsapp.databinding.ActivityRoomCreationBinding
+import ru.abbysoft.rehearsapp.model.Image
 import ru.abbysoft.rehearsapp.model.Room
-import ru.abbysoft.rehearsapp.util.saveAsync
-import ru.abbysoft.rehearsapp.util.validateThatNotBlank
+import ru.abbysoft.rehearsapp.util.*
 
 const val ROOM_EXTRA = "Room"
 
 class RoomCreationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRoomCreationBinding
-    private val photos = ArrayList<String>(10)
+    private val photos = ArrayList<Image>(10)
+    private lateinit var adapter: PhotoSliderAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +44,8 @@ class RoomCreationActivity : AppCompatActivity() {
     }
 
     private fun configureGallery() {
-        imageSlider.sliderAdapter = PhotoSliderAdapter(photos, this)
+        adapter = PhotoSliderAdapter(photos, this)
+        imageSlider.sliderAdapter = adapter
     }
 
     fun save(view: View) {
@@ -55,14 +59,32 @@ class RoomCreationActivity : AppCompatActivity() {
         room.name = room_creation_name.text.toString()
         room.price = room_price_field.text.toString().toFloat()
         room.area = room_area_field.text.toString().toFloat()
+        room.images = photos
 
-        saveAsync(room, Consumer {result(it as Long)}, getString(R.string.cannot_save_room), this)
+        saveAsync(room, Consumer {finishWithResult(it as Long)}, getString(R.string.cannot_save_room), this)
     }
 
-    private fun result(id: Long) {
+    private fun finishWithResult(id: Long) {
         val intent = Intent()
         intent.putExtra(ROOM_EXTRA, id)
         setResult(Activity.RESULT_OK, intent)
         finish()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            handlePickImageResult(data, Consumer { savePhoto(it) }, this)
+        }
+    }
+
+    private fun savePhoto(data: Uri) {
+        val stream = contentResolver.openInputStream(data)
+
+        val bitmap = BitmapFactory.decodeStream(stream) ?: return
+        val bytes = bitmap.toByteArray()
+        saveImageToServer(bytes, Consumer { adapter.onPhotoAdded(it) }, Runnable { showErrorMessage(getString(
+                    R.string.failed_to_save), this) })
     }
 }

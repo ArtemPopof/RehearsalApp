@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import android.util.Log
 import androidx.core.util.Consumer
 import retrofit2.Call
+import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeoutException
 
 class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
                                    private val failCallback: Consumer<Exception>? = null,
-                                   private val timeoutSec: Long = 10L) : AsyncTask<Call<T>, Any, Any>() {
+                                   private val timeoutSec: Long = 10L) : AsyncTask<Call<T>, Any, T>() {
 
     private var exception: Exception? = null
 
@@ -24,7 +25,7 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
 
     val pool = Executors.newScheduledThreadPool(1)
 
-    override fun doInBackground(vararg params: Call<T>): Nothing? {
+    override fun doInBackground(vararg params: Call<T>): T {
         if (timeoutSec > 0) {
             startTimer(Runnable {
                 this.cancel(true)
@@ -34,13 +35,13 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
 
         try {
             val result = params[0].execute()
-            if (!result.isSuccessful) {
+            if (!result.isSuccessful || result.body() == null) {
                 val errorBody = result.errorBody()
                 errorBody?.let {
                     handleException(RestServiceException(it.string()))
                 }
             } else {
-                consumer.accept(result.body())
+                return result.body() as T
             }
         } catch (ex: Exception) {
             handleException(ex)
@@ -48,7 +49,11 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
             pool.shutdownNow()
         }
 
-        return null
+        throw IllegalStateException("some error")
+    }
+
+    override fun onPostExecute(result: T) {
+        consumer.accept(result)
     }
 
     fun execute(call: Call<T>) {
@@ -86,6 +91,14 @@ fun updatePlaceAsync(place: Place, errorMessage: String, context: Context) {
     ).execute(ServiceFactory.getDatabaseService().updatePlace(place))
 }
 
+fun Context.updateRoomAsync(room: Room, errorMessage: String,
+                            finishCallback: Runnable = Runnable {  }) {
+    AsyncServiceRequest(
+        Consumer <Boolean> { if (!it) showErrorMessage(errorMessage, this); finishCallback.run() },
+        Consumer { showErrorMessage(errorMessage, this) }
+    ).execute(ServiceFactory.getDatabaseService().updateRoom(room.id, room))
+}
+
 fun <T: Any> saveAsync(entity: Any, callback: Consumer<T>, errorMessage: String, context: Context) {
     AsyncServiceRequest(
         Consumer<T> { callback.accept(it) },
@@ -99,4 +112,11 @@ fun getCall(entity: Any): Call<*> {
     }
 
     throw IllegalStateException("not realised another options")
+}
+
+fun Context.loadImageDataAsync(imageId: String, consumer: Consumer<ByteArray>) {
+    AsyncServiceRequest(
+        Consumer<ByteArray> { consumer.accept(it) },
+        Consumer { showErrorMessage(getString(R.string.cannot_load_image), this) }
+    ).execute(ServiceFactory.getImageService().getImage(imageId))
 }
