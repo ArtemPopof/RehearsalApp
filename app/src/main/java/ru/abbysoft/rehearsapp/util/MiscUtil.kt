@@ -9,14 +9,18 @@ import android.os.AsyncTask
 import android.util.Log
 import android.widget.EditText
 import androidx.core.util.Consumer
+import com.vk.api.sdk.VK
+import com.vk.api.sdk.VKApiCallback
+import com.vk.api.sdk.exceptions.VKApiExecutionException
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.login.VkAccountInfoRequest
+import ru.abbysoft.rehearsapp.login.VkUser
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.lang.IllegalStateException
 
 const val PICK_IMAGE = 0
-
 fun showErrorMessage(message: String, context: Context) {
     AlertDialog.Builder(context)
         .setTitle(context.getString(R.string.oops))
@@ -101,8 +105,14 @@ fun <T> add(list: List<T>, element: T): List<T> {
     return newList
 }
 
-fun <T: Activity> launchActivity(fromActivity: Activity, toActivity: Class<T>) {
+fun <T: Activity> launchActivity(fromActivity: Activity, toActivity: Class<T>,
+                                 extra: String? = null) {
     val intent = Intent(fromActivity, toActivity)
+
+    if (extra != null) {
+        intent.putExtra(extra, 0)
+    }
+
     fromActivity.startActivity(intent)
 }
 
@@ -115,4 +125,22 @@ fun <T: Activity> launchActivityForResult(
 
 fun imageUrl(url: String): String {
     return "$baseUrl/image/$url.jpeg"
+}
+
+fun Context.getVkUserInfo(consumer: Consumer<VkUser>) {
+    VK.execute(VkAccountInfoRequest(), VKUserCallback(this, consumer))
+}
+
+private class VKUserCallback(val context: Context, val consumer: Consumer<VkUser>) : VKApiCallback<VkUser> {
+    override fun fail(error: VKApiExecutionException) {
+        Log.e("UTILS", "Failed to get user info through VK SDK")
+        error.printStackTrace()
+        showErrorMessage("Login error, try another method or skip", context)
+    }
+
+    override fun success(result: VkUser) {
+        consumer.accept(result)
+        Log.i("UTILS", "Continue as $result")
+    }
+
 }

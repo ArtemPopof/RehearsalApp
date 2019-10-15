@@ -7,6 +7,7 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".RehearsalApp"
@@ -16,14 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".room.RoomCreationActivity"></activity>
-        <activity android:name=".place.PlaceCreationActivity" />
-        <activity android:name=".menu.MenuActivity">
+        <activity
+            android:name=".login.LoginActivity"
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".room.RoomCreationActivity" />
+        <activity android:name=".place.PlaceCreationActivity" />
+        <activity android:name=".menu.MenuActivity">
         </activity>
         <activity
             android:name=".place.PlaceViewActivity"

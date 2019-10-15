@@ -1,29 +1,33 @@
 package ru.abbysoft.rehearsapp
 
 import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.os.AsyncTask
 import android.util.Log
 import androidx.core.util.Consumer
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
 import ru.abbysoft.rehearsapp.util.baseUrl
-import java.io.IOException
 import java.lang.Exception
-import java.net.HttpURLConnection
-import java.net.URL
-
+import com.vk.api.sdk.VKTokenExpiredHandler
+import com.vk.api.sdk.VK
 
 class RehearsalApp : Application() {
 
     private val TAG = "RehearsalApp"
 
+    private var tokenTracker: VKTokenExpiredHandler = object : VKTokenExpiredHandler {
+        override fun onTokenExpired() {
+            // expired token
+        }
+    }
+
+
     override fun onCreate() {
         super.onCreate()
 
         initRestService()
+
+        VK.initialize(this)
 
         AsyncServiceRequest(
             Consumer<List<Place>> { logAllPlaces(it) },
