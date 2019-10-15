@@ -84,10 +84,10 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
     class RestServiceException(message: String) : Exception(message)
 }
 
-fun updatePlaceAsync(place: Place, errorMessage: String, context: Context) {
+fun Context.updatePlaceAsync(place: Place, errorMessage: String = "Cannot update place info") {
     AsyncServiceRequest(
-        Consumer<Boolean> { if (!it) showErrorMessage(errorMessage, context); },
-        Consumer { showErrorMessage(errorMessage, context) }
+        Consumer<Boolean> { if (!it) showErrorMessage(errorMessage, this); },
+        Consumer { showErrorMessage(errorMessage, this) }
     ).execute(ServiceFactory.getDatabaseService().updatePlace(place))
 }
 
@@ -99,10 +99,10 @@ fun Context.updateRoomAsync(room: Room, errorMessage: String,
     ).execute(ServiceFactory.getDatabaseService().updateRoom(room.id, room))
 }
 
-fun <T: Any> saveAsync(entity: Any, callback: Consumer<T>, errorMessage: String, context: Context) {
+fun <T: Any> Context.saveAsync(entity: Any, callback: Consumer<T>, errorMessage: String = "Cannot save data") {
     AsyncServiceRequest(
         Consumer<T> { callback.accept(it) },
-        Consumer { showErrorMessage(errorMessage, context) }
+        Consumer { showErrorMessage(errorMessage, this) }
     ).execute(getCall(entity) as Call<T>)
 }
 
@@ -119,4 +119,11 @@ fun Context.loadImageDataAsync(imageId: String, consumer: Consumer<ByteArray>) {
         Consumer<ByteArray> { consumer.accept(it) },
         Consumer { showErrorMessage(getString(R.string.cannot_load_image), this) }
     ).execute(ServiceFactory.getImageService().getImage(imageId))
+}
+
+fun Context.loadPlaceAsync(placeId: Long, consumer: Consumer<Place>) {
+    AsyncServiceRequest(
+        consumer,
+        Consumer { showErrorMessage(getString(R.string.cannot_load_place), this) }
+    ).execute(ServiceFactory.getDatabaseService().getPlace(placeId))
 }

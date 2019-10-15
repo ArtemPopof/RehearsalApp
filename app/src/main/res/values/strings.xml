@@ -133,6 +133,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="welcome_message">Welcome, %s, again…</string>
     <string name="welcome_to_app">Welcome to Rehearsapp</string>
+    <string name="cannot_load_place">Cannot load place</string>
 
     <integer name="com_vk_sdk_AppId">7171332</integer>
 

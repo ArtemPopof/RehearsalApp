@@ -61,7 +61,7 @@ class RoomCreationActivity : AppCompatActivity() {
         room.area = room_area_field.text.toString().toFloat()
         room.images = photos
 
-        saveAsync(room, Consumer {finishWithResult(it as Long)}, getString(R.string.cannot_save_room), this)
+        saveAsync(room, Consumer {finishWithResult(it as Long)}, getString(R.string.cannot_save_room))
     }
 
     private fun finishWithResult(id: Long) {

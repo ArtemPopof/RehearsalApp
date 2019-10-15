@@ -151,7 +151,7 @@ class PlaceViewActivity : AppCompatActivity() {
     private fun roomAdded(room: Room) {
         val place = binding.place as Place
         place.rooms = add(place.rooms, room)
-        updatePlaceAsync(place, "Failed to add new room", this)
+        updatePlaceAsync(place, "Failed to add new room")
         binding.place = place
     }
 

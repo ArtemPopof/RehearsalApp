@@ -79,11 +79,10 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
         place.position = location.toString()
         place.name = nameField.text.toString()
 
-        if (lastCreatedPlace != null) {
-            //editExisting(CacheFactory.getDefaultCacheInstance().getPlace(lastCreatedPlace as Long),location)
+        if (lastCreatedPlace == null) {
             addPlace(place)
         } else {
-            addPlace(place)
+            loadPlaceAsync(lastCreatedPlace as Long, Consumer { editExisting(it, place) })
         }
 
     }
@@ -109,9 +108,11 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
         Log.e(TAG, "Cannot save place!")
     }
 
-    private fun editExisting(place: Place, position: LatLng) {
-//        place.position = position
-//        place.name = model.name
-//        Log.i(TAG, "Place changed $place")
+    private fun editExisting(place: Place, newInfo: Place) {
+        place.name = newInfo.name
+        place.position = newInfo.position
+
+        updatePlaceAsync(place)
+        finish()
     }
 }
