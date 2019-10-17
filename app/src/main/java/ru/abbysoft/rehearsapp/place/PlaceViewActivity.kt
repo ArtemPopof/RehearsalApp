@@ -18,7 +18,7 @@ import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.room.ROOM_EXTRA
-import ru.abbysoft.rehearsapp.room.RoomCreationActivity
+import ru.abbysoft.rehearsapp.room.RoomViewActivity
 import ru.abbysoft.rehearsapp.util.*
 import java.lang.IllegalArgumentException
 
@@ -145,7 +145,7 @@ class PlaceViewActivity : AppCompatActivity() {
     }
 
     fun addNewRoom(view: View) {
-        launchActivityForResult(this, RoomCreationActivity::class.java, ROOM_REQUEST)
+        launchActivityForResult(this, RoomViewActivity::class.java, ROOM_REQUEST)
     }
 
     private fun roomAdded(room: Room) {

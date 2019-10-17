@@ -10,6 +10,9 @@ import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.databinding.RoomCardBinding
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
+import ru.abbysoft.rehearsapp.room.ROOM_EXTRA
+import ru.abbysoft.rehearsapp.room.RoomViewActivity
+import ru.abbysoft.rehearsapp.util.launchActivity
 
 
 class RoomCardView : FrameLayout {
@@ -32,6 +35,19 @@ class RoomCardView : FrameLayout {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         binding = DataBindingUtil.inflate(inflater, R.layout.room_card, this, true)
+
+        configureOnClick()
+    }
+
+    private fun configureOnClick() {
+        setOnClickListener {
+            val roomId = binding?.room?.id
+            if (roomId != null) {
+                it.context.launchActivity(RoomViewActivity::class.java)
+                    .putExtra(ROOM_EXTRA, roomId)
+                    .start()
+            }
+        }
     }
 
     fun setRoom(room: Room?) {

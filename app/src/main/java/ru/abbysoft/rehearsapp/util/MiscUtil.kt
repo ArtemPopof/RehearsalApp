@@ -108,15 +108,19 @@ fun <T> add(list: List<T>, element: T): List<T> {
     return newList
 }
 
-fun <T: Activity> launchActivity(fromActivity: Activity, toActivity: Class<T>,
+fun <T: Activity> launchActivity(fromContext: Context, toActivity: Class<T>,
                                  extra: String? = null) {
-    val intent = Intent(fromActivity, toActivity)
+    val intent = Intent(fromContext, toActivity)
 
     if (extra != null) {
         intent.putExtra(extra, 0)
     }
 
-    fromActivity.startActivity(intent)
+    fromContext.startActivity(intent)
+}
+
+fun <T: Activity> Context.launchActivity(toActivity: Class<T>): ActivityLoader<T> {
+    return ActivityLoader(this, toActivity)
 }
 
 fun <T: Activity> launchActivityForResult(
@@ -124,6 +128,21 @@ fun <T: Activity> launchActivityForResult(
 
     val intent = Intent(fromActivity, toActivity)
     fromActivity.startActivityForResult(intent, request)
+}
+
+class ActivityLoader <T: Activity> (private val context: Context, toBeLoaded: Class<T>) {
+
+    private val intent = Intent(context, toBeLoaded)
+
+    fun putExtra(extraKey: String, extraValue: Long): ActivityLoader<T> {
+        intent.putExtra(extraKey, extraValue)
+
+        return this
+    }
+
+    fun start() {
+        context.startActivity(intent)
+    }
 }
 
 fun imageUrl(url: String): String {

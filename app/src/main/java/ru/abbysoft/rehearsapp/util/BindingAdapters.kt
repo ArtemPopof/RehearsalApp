@@ -14,6 +14,7 @@ import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.component.RoomCardView
 import ru.abbysoft.rehearsapp.model.Image
 import ru.abbysoft.rehearsapp.model.Room
+import ru.abbysoft.rehearsapp.model.TimeSlot
 
 object BindingAdapters {
     @JvmStatic
@@ -50,9 +51,15 @@ object BindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("app:priceFrom")
+    fun priceFrom(text: TextView, price: Float) {
+        text.text = text.context.getString(R.string.priceFrom, price)
+    }
+
+    @JvmStatic
     @BindingAdapter("app:price")
     fun price(text: TextView, price: Float) {
-        text.text = text.context.getString(R.string.priceFrom, price)
+        text.text = text.context.getString(R.string.dollars, price)
     }
 
     @JvmStatic
@@ -71,4 +78,24 @@ object BindingAdapters {
         }
     }
 
+    @JvmStatic
+    @BindingAdapter("app:timeSpan")
+    fun timeSpan(textView: TextView, slot: TimeSlot?) {
+        if (slot == null) {
+            textView.text = textView.context.getString(R.string.undefined)
+            return
+        }
+        
+        val start = getHoursAndMinutes(slot.timeStart)
+        val end = getHoursAndMinutes(slot.timeEnd)
+        
+        textView.text = textView.context.getString(R.string.time_span, start, end)
+    }
+    
+    private fun getHoursAndMinutes(seconds: Int): String {
+        val hours = seconds / 3600
+        val minutes = (seconds - hours * 3600) / 60
+
+        return "$hours:$minutes"
+    }
 }

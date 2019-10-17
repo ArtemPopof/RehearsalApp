@@ -42,7 +42,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'ru.abbysoft.rehearsapp:model:0.0.6-SNAPSHOT'
+    implementation 'ru.abbysoft.rehearsapp:model:0.0.7-SNAPSHOT'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
 
     implementation 'com.github.smarteist:autoimageslider:1.3.2'

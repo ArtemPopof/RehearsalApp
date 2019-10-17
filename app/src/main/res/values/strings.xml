@@ -137,6 +137,11 @@
     <string name="what_are_you_looking_for">What you are looking for?</string>
     <string name="i_am_musician">I\'m looking for a place to practice</string>
     <string name="i_m_place_owner">I\'m place owner</string>
+    <string name="book">book</string>
+    <string name="undefined">undefined</string>
+    <string name="time_span">%s - %s</string>
+    <string name="taken_by">Taken by %s</string>
+    <string name="dollars">%f.2$</string>
 
     <integer name="com_vk_sdk_AppId">7171332</integer>
 

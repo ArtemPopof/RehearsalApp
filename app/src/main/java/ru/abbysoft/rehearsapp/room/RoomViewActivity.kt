@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_room_creation.*
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.TimeSlotsActivity
 import ru.abbysoft.rehearsapp.component.PhotoSliderAdapter
 import ru.abbysoft.rehearsapp.databinding.ActivityRoomCreationBinding
 import ru.abbysoft.rehearsapp.model.Image
@@ -20,7 +21,7 @@ import ru.abbysoft.rehearsapp.util.*
 
 const val ROOM_EXTRA = "Room"
 
-class RoomCreationActivity : AppCompatActivity() {
+class RoomViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRoomCreationBinding
     private val photos = ArrayList<Image>(10)
@@ -30,6 +31,7 @@ class RoomCreationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_room_creation)
+
         configureModel()
         configureGallery()
     }
@@ -37,10 +39,36 @@ class RoomCreationActivity : AppCompatActivity() {
     private fun configureModel() {
         val model = ViewModelProviders.of(this)[RoomCreationViewModel::class.java]
         binding.model = model
-        model.name.value = getString(R.string.new_room)
-        model.area.value = "0"
-        model.price.value = "0"
-        model.hasPhotos.value = false
+
+        // if this activity used for view of existing room
+        loadRoomFromIntent()
+
+        if (model.room.value == null) {
+            configureNewRoom(model)
+        }
+    }
+
+    private fun loadRoomFromIntent() {
+        val roomId = intent.extras?.getLong(ROOM_EXTRA) ?: return
+
+        loadRoomAsync(roomId, Consumer {openRoomForView(it)})
+    }
+
+    private fun openRoomForView(room: Room) {
+        binding.model?.room?.value = room
+
+        saveButton.visibility = View.GONE
+        bookButton.visibility = View.VISIBLE
+        room_creation_name.isEnabled = false
+        room_area_field.isEnabled = false
+        room_price_field.isEnabled = false
+    }
+
+    private fun configureNewRoom(model: RoomCreationViewModel) {
+        val room = Room()
+        room.name = getString(R.string.new_room)
+
+        model.room.value = room
     }
 
     private fun configureGallery() {
@@ -86,5 +114,9 @@ class RoomCreationActivity : AppCompatActivity() {
         val bytes = bitmap.toByteArray()
         saveImageToServer(bytes, Consumer { adapter.onPhotoAdded(it) }, Runnable { showErrorMessage(getString(
                     R.string.failed_to_save), this) })
+    }
+
+    fun book(view: View) {
+        launchActivity(this, TimeSlotsActivity::class.java)
     }
 }

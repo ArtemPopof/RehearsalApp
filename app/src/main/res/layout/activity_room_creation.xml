@@ -74,7 +74,7 @@
                     android:ems="10"
                     android:gravity="center_horizontal"
                     android:inputType="textPersonName"
-                    app:text="@{model.name}"
+                    app:text="@{model.room.name}"
                     android:textSize="34sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +140,7 @@
                     android:width="100dp"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:text='@{model.area}'
+                    android:text='@{String.valueOf(model.room.area)}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -153,7 +153,7 @@
                     android:width="100dp"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:text="@{model.price}"
+                    android:text="@{String.valueOf(model.room.price)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -162,13 +162,26 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="16dp"
             android:onClick="save"
             android:text="@string/save"
             android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/room_scroll" />
+
+        <Button
+            android:id="@+id/bookButton"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:onClick="book"
+            android:text="@string/book"
+            android:textSize="30sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/room_scroll" />

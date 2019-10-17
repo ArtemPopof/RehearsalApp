@@ -127,3 +127,10 @@ fun Context.loadPlaceAsync(placeId: Long, consumer: Consumer<Place>) {
         Consumer { showErrorMessage(getString(R.string.cannot_load_place), this) }
     ).execute(ServiceFactory.getDatabaseService().getPlace(placeId))
 }
+
+fun Context.loadRoomAsync(roomId: Long, consumer: Consumer<Room>) {
+    AsyncServiceRequest(
+        consumer,
+        Consumer { showErrorMessage("Cannot load room", this)}
+    ).execute(ServiceFactory.getDatabaseService().getRoom(roomId))
+}
