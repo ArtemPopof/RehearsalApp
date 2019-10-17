@@ -4,17 +4,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.util.Consumer
+import androidx.databinding.Observable
+import androidx.databinding.Observable.OnPropertyChangedCallback
 import kotlinx.android.synthetic.main.activity_menu.*
 import ru.abbysoft.rehearsapp.MapsActivity
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.login.AuntificationManager
 import ru.abbysoft.rehearsapp.login.VkUser
 import ru.abbysoft.rehearsapp.model.Place
+import ru.abbysoft.rehearsapp.model.User
 import ru.abbysoft.rehearsapp.place.PlaceCreationActivity
 import ru.abbysoft.rehearsapp.place.PlaceViewActivity
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
 import ru.abbysoft.rehearsapp.util.getVkUserInfo
 import ru.abbysoft.rehearsapp.util.showErrorMessage
+import ru.abbysoft.rehearsapp.util.whenUserChanged
 import java.util.*
 
 const val LOGIN_HAPPENED_EXTRA = "LOGIN_HAPPENED"
@@ -24,29 +29,16 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        if (isLoginSkipped()) {
-            hideLoginField()
-        } else {
-            tryToGetUserInfo()
-        }
-    }
+        hideLoginField()
 
-    private fun isLoginSkipped(): Boolean {
-        if (intent.extras == null) {
-            return true
-        }
-        return !(intent.extras as Bundle).containsKey(LOGIN_HAPPENED_EXTRA)
+        whenUserChanged(Consumer { updateMessage(it) })
     }
 
     private fun hideLoginField() {
-        welcome_message.text = getString(R.string.welcome_to_app)
+        welcome_message.text = getString(R.string.welcome_to_app, AuntificationManager.user?.role)
     }
 
-    private fun tryToGetUserInfo() {
-        getVkUserInfo(Consumer { updateMessage(it) })
-    }
-
-    private fun updateMessage(userInfo: VkUser) {
+    private fun updateMessage(userInfo: User) {
         welcome_message.text = getString(R.string.welcome_message, "${userInfo.firstName} ${userInfo.lastName}")
     }
 

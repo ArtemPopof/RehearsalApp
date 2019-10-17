@@ -1,8 +1,8 @@
 package ru.abbysoft.rehearsapp
 
-import android.app.Application
 import android.util.Log
 import androidx.core.util.Consumer
+import androidx.multidex.MultiDexApplication
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
@@ -11,7 +11,7 @@ import java.lang.Exception
 import com.vk.api.sdk.VKTokenExpiredHandler
 import com.vk.api.sdk.VK
 
-class RehearsalApp : Application() {
+class RehearsalApp : MultiDexApplication() {
 
     private val TAG = "RehearsalApp"
 
@@ -20,7 +20,6 @@ class RehearsalApp : Application() {
             // expired token
         }
     }
-
 
     override fun onCreate() {
         super.onCreate()

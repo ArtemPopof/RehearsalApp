@@ -33,7 +33,8 @@ class LoginActivity : AppCompatActivity() {
 
     inner class AuthCallback : VKAuthCallback {
         override fun onLogin(token: VKAccessToken) {
-            launchActivity(this@LoginActivity, MenuActivity::class.java, LOGIN_HAPPENED_EXTRA)
+            AuntificationManager.signUpOrLogIn(this@LoginActivity)
+            launchActivity(this@LoginActivity, MenuActivity::class.java)
         }
 
         override fun onLoginFailed(errorCode: Int) {

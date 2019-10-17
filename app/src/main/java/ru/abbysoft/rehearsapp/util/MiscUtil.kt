@@ -9,14 +9,17 @@ import android.os.AsyncTask
 import android.util.Log
 import android.widget.EditText
 import androidx.core.util.Consumer
+import androidx.databinding.Observable
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.VKApiCallback
 import com.vk.api.sdk.exceptions.VKApiExecutionException
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.login.AuntificationManager
 import ru.abbysoft.rehearsapp.login.VkAccountInfoRequest
 import ru.abbysoft.rehearsapp.login.VkUser
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
+import ru.abbysoft.rehearsapp.model.User
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.lang.IllegalStateException
 
@@ -141,6 +144,16 @@ private class VKUserCallback(val context: Context, val consumer: Consumer<VkUser
     override fun success(result: VkUser) {
         consumer.accept(result)
         Log.i("UTILS", "Continue as $result")
+    }
+}
+
+fun whenUserChanged(consumer: Consumer<User>) {
+    AuntificationManager.loggedIn.addOnPropertyChangedCallback(UserChangedListener(consumer))
+}
+
+class UserChangedListener (val consumer: Consumer<User>) : Observable.OnPropertyChangedCallback() {
+    override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+        consumer.accept(AuntificationManager.user)
     }
 
 }

@@ -132,8 +132,11 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="welcome_message">Welcome, %s, again…</string>
-    <string name="welcome_to_app">Welcome to Rehearsapp</string>
+    <string name="welcome_to_app">Welcome to Rehearsapp, %s</string>
     <string name="cannot_load_place">Cannot load place</string>
+    <string name="what_are_you_looking_for">What you are looking for?</string>
+    <string name="i_am_musician">I\'m looking for a place to practice</string>
+    <string name="i_m_place_owner">I\'m place owner</string>
 
     <integer name="com_vk_sdk_AppId">7171332</integer>
 
