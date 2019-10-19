@@ -141,7 +141,7 @@
     <string name="undefined">undefined</string>
     <string name="time_span">%s - %s</string>
     <string name="taken_by">Taken by %s</string>
-    <string name="dollars">%f.2$</string>
+    <string name="dollars">%1.2f$</string>
 
     <integer name="com_vk_sdk_AppId">7171332</integer>
 

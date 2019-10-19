@@ -96,6 +96,9 @@ object BindingAdapters {
         val hours = seconds / 3600
         val minutes = (seconds - hours * 3600) / 60
 
+        if ("$minutes".length == 1) {
+            return "$hours:0$minutes"
+        }
         return "$hours:$minutes"
     }
 }

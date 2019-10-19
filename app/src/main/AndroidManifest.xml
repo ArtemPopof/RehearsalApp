@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TimeSlotsActivity"></activity>
+        <activity android:name=".booking.TimeSlotsActivity"></activity>
         <activity android:name=".RoleChooseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

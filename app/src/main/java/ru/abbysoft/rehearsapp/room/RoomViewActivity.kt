@@ -6,13 +6,14 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_room_creation.*
 import ru.abbysoft.rehearsapp.R
-import ru.abbysoft.rehearsapp.TimeSlotsActivity
+import ru.abbysoft.rehearsapp.booking.TimeSlotsActivity
 import ru.abbysoft.rehearsapp.component.PhotoSliderAdapter
 import ru.abbysoft.rehearsapp.databinding.ActivityRoomCreationBinding
 import ru.abbysoft.rehearsapp.model.Image
@@ -117,6 +118,12 @@ class RoomViewActivity : AppCompatActivity() {
     }
 
     fun book(view: View) {
-        launchActivity(this, TimeSlotsActivity::class.java)
+        val roomId = binding.model?.room?.value?.id
+        if (roomId == null) {
+            Log.e("RoomViewActivity", "Something goes wrong")
+            return
+        }
+
+        this.launchActivity(TimeSlotsActivity::class.java).putExtra(ROOM_EXTRA, roomId).start()
     }
 }
