@@ -119,7 +119,7 @@ class RoomViewActivity : AppCompatActivity() {
         if (requestCode == PICK_IMAGE) {
             handlePickImageResult(data, Consumer { savePhoto(it) }, this)
         } else if (requestCode == LOGIN_REQUEST) {
-            //binding.userId = AuntificationManager.user?.id
+            binding.userId = AuntificationManager.user?.id
         }
     }
 
