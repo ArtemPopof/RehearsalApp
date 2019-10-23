@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_time_slots.*
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.databinding.TimeSlotBinding
+import ru.abbysoft.rehearsapp.login.AuntificationManager
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.model.TimeSlot
 import ru.abbysoft.rehearsapp.room.ROOM_EXTRA
@@ -51,7 +52,7 @@ class TimeSlotsActivity : AppCompatActivity() {
         bookSlot(
             slotId,
             userId,
-            onSuccess= Runnable { slotBinding.bookedBy = "$"}
+            onSuccess= Runnable { slotBinding.bookedBy = AuntificationManager.user?.firstName}
         )
     }
 }

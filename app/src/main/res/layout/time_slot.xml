@@ -41,14 +41,13 @@
                 android:id="@+id/slot_taken_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="68dp"
+                android:layout_marginTop="16dp"
                 android:text="@{@string/taken_by(bookedBy)}"
                 android:textColor="#F44336"
                 android:textSize="24sp"
                 app:hide="@{bookedBy == null}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/slot_price"
+                app:layout_constraintTop_toBottomOf="@+id/slot_price" />
 
             <Button
                 android:id="@+id/slot_book_button"
@@ -56,6 +55,7 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/book"
+                app:hide="@{bookedBy != null}"
                 app:layout_constraintStart_toStartOf="@+id/slot_price"
                 app:layout_constraintTop_toBottomOf="@+id/slot_price" />
 
