@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.http.*
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
+import ru.abbysoft.rehearsapp.model.User
 
 interface PlaceService {
 
@@ -21,6 +22,9 @@ interface PlaceService {
 
     @POST("/room/")
     fun saveRoom(@Body room: Room): Call<Long>
+
+    @POST("/user")
+    fun saveUser(@Body user: User): Call<Long>
 
     @PUT("/place/update/")
     fun updatePlace(@Body place: Place) : Call<Boolean>

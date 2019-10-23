@@ -16,11 +16,17 @@ import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.booking.TimeSlotsActivity
 import ru.abbysoft.rehearsapp.component.PhotoSliderAdapter
 import ru.abbysoft.rehearsapp.databinding.ActivityRoomCreationBinding
+import ru.abbysoft.rehearsapp.login.AuntificationManager
+import ru.abbysoft.rehearsapp.login.LoginActivity
 import ru.abbysoft.rehearsapp.model.Image
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.util.*
 
 const val ROOM_EXTRA = "Room"
+const val PARENT_ACTIVITY_EXTRA = "activity_extra"
+const val ROOM_VIEW_ACTIVITY = "room_view_activity"
+
+private const val TAG = "ROOM_VIEW"
 
 class RoomViewActivity : AppCompatActivity() {
 
@@ -32,6 +38,8 @@ class RoomViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_room_creation)
+
+        binding.userId = AuntificationManager.user?.id ?: -1L
 
         configureModel()
         configureGallery()
@@ -59,7 +67,7 @@ class RoomViewActivity : AppCompatActivity() {
         binding.model?.room?.value = room
 
         saveButton.visibility = View.GONE
-        bookButton.visibility = View.VISIBLE
+        bookButton.visibility = if (binding.userId != -1L) View.VISIBLE else View.GONE
         room_creation_name.isEnabled = false
         room_area_field.isEnabled = false
         room_price_field.isEnabled = false
@@ -103,8 +111,15 @@ class RoomViewActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
+            Log.d(TAG, "returned from activity $requestCode")
+            return
+        }
+
+        if (requestCode == PICK_IMAGE) {
             handlePickImageResult(data, Consumer { savePhoto(it) }, this)
+        } else if (requestCode == LOGIN_REQUEST) {
+            //binding.userId = AuntificationManager.user?.id
         }
     }
 
@@ -125,5 +140,20 @@ class RoomViewActivity : AppCompatActivity() {
         }
 
         this.launchActivity(TimeSlotsActivity::class.java).putExtra(ROOM_EXTRA, roomId).start()
+    }
+
+    fun loginToBook(view: View) {
+        launchForResult(LoginActivity::class.java)
+            .withRequestCode(LOGIN_REQUEST)
+            .putExtra(PARENT_ACTIVITY_EXTRA, ROOM_VIEW_ACTIVITY)
+            .start()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.userId = AuntificationManager.user?.id
+
+        Log.i(TAG, "user id: ${binding.userId}")
     }
 }

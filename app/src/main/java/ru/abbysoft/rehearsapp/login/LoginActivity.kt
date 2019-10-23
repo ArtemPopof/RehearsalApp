@@ -10,15 +10,30 @@ import com.vk.api.sdk.auth.VKAuthCallback
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.menu.LOGIN_HAPPENED_EXTRA
 import ru.abbysoft.rehearsapp.menu.MenuActivity
+import ru.abbysoft.rehearsapp.room.PARENT_ACTIVITY_EXTRA
+import ru.abbysoft.rehearsapp.room.ROOM_VIEW_ACTIVITY
+import ru.abbysoft.rehearsapp.room.RoomViewActivity
 import ru.abbysoft.rehearsapp.util.launchActivity
 import ru.abbysoft.rehearsapp.util.showErrorMessage
 
 class LoginActivity : AppCompatActivity() {
 
+    var launchedFrom: Class<*>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_login)
+
+        rememberWhoLaunchedThis()
+    }
+
+    private fun rememberWhoLaunchedThis() {
+        val extra = intent.extras?.getString(PARENT_ACTIVITY_EXTRA)
+
+        if (extra == ROOM_VIEW_ACTIVITY) {
+            launchedFrom = RoomViewActivity::class.java
+        }
     }
 
     fun loginVk(view: View) {
@@ -34,7 +49,12 @@ class LoginActivity : AppCompatActivity() {
     inner class AuthCallback : VKAuthCallback {
         override fun onLogin(token: VKAccessToken) {
             AuntificationManager.signUpOrLogIn(this@LoginActivity)
-            launchActivity(this@LoginActivity, MenuActivity::class.java)
+
+            if (launchedFrom == null) {
+                launchActivity(this@LoginActivity, MenuActivity::class.java)
+            } else {
+                finish()
+            }
         }
 
         override fun onLoginFailed(errorCode: Int) {

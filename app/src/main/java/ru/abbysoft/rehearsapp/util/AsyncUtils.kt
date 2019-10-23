@@ -6,8 +6,10 @@ import android.util.Log
 import androidx.core.util.Consumer
 import retrofit2.Call
 import ru.abbysoft.rehearsapp.R
+import ru.abbysoft.rehearsapp.login.AuntificationManager
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
+import ru.abbysoft.rehearsapp.model.User
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.lang.Exception
 import java.lang.IllegalStateException
@@ -109,6 +111,7 @@ fun <T: Any> Context.saveAsync(entity: Any, callback: Consumer<T>, errorMessage:
 fun getCall(entity: Any): Call<*> {
     when (entity) {
         is Room -> return ServiceFactory.getDatabaseService().saveRoom(entity)
+        is User -> return ServiceFactory.getDatabaseService().saveUser(entity)
     }
 
     throw IllegalStateException("not realised another options")
@@ -133,4 +136,22 @@ fun Context.loadRoomAsync(roomId: Long, consumer: Consumer<Room>) {
         consumer,
         Consumer { showErrorMessage("Cannot load room", this)}
     ).execute(ServiceFactory.getDatabaseService().getRoom(roomId))
+}
+
+fun Context.bookSlot(slotId: Long, userId: Long, onSuccess: Runnable = Runnable { }) {
+    AsyncServiceRequest(
+        Consumer<Boolean> {
+            if (!it)
+                showErrorMessage(getString(R.string.error_booking_slot), this)
+            else {
+                showInfoMessage("Slot successfully booked!")
+                onSuccess.run()
+            }
+        },
+        Consumer { showErrorMessage(getString(R.string.error_booking_slot), this) }
+    ).execute(ServiceFactory.getBookService().bookSlot(slotId, userId))
+}
+
+fun getUserId(): Long? {
+    return AuntificationManager.user?.id
 }

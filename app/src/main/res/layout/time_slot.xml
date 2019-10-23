@@ -7,6 +7,9 @@
         <variable
             name="slot"
             type="ru.abbysoft.rehearsapp.model.TimeSlot" />
+        <variable
+            name="bookedBy"
+            type="String" />
 
         <import type="ru.abbysoft.rehearsapp.util.MiscUtilKt"/>
     </data>
@@ -39,10 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="68dp"
-                android:text="@string/taken_by"
+                android:text="@{@string/taken_by(bookedBy)}"
                 android:textColor="#F44336"
                 android:textSize="24sp"
-                android:visibility="gone"
+                app:hide="@{bookedBy == null}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -7,6 +7,9 @@
         <variable
             name="model"
             type="ru.abbysoft.rehearsapp.room.RoomCreationViewModel" />
+        <variable
+            name="userId"
+            type="Long" />
     </data>
 
     <LinearLayout
@@ -181,10 +184,24 @@
             android:onClick="book"
             android:text="@string/book"
             android:textSize="30sp"
-            android:visibility="gone"
+            app:hide="@{userId == -1L}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/room_scroll" />
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:onClick="loginToBook"
+            android:text="@string/login_to_book"
+            android:textSize="30sp"
+            app:hide="@{userId != -1L}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/room_scroll" />
+
 
     </LinearLayout>
 

@@ -11,10 +11,12 @@ class ServiceFactory private constructor(baseUrl: String) {
 
     var databaseService: PlaceService
     var imageService: ImageService
+    var bookingService: BookService
 
     init {
         databaseService = retrofit.create(PlaceService::class.java)
         imageService = retrofit.create(ImageService::class.java)
+        bookingService = retrofit.create(BookService::class.java)
     }
 
     companion object {
@@ -39,6 +41,12 @@ class ServiceFactory private constructor(baseUrl: String) {
             checkInstance()
 
             return instance?.imageService as ImageService
+        }
+
+        fun getBookService(): BookService {
+            checkInstance()
+
+            return instance?.bookingService as BookService
         }
     }
 }

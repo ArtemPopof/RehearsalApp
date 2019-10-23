@@ -23,13 +23,24 @@ import ru.abbysoft.rehearsapp.model.User
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.lang.IllegalStateException
 
-const val PICK_IMAGE = 0
+fun Context.showErrorMessage(message: String) {
+    showErrorMessage(message, this)
+}
+
+fun Context.showInfoMessage(message: String) {
+    showMessage(message, this, android.R.drawable.ic_dialog_info)
+}
+
 fun showErrorMessage(message: String, context: Context) {
+    showMessage(message, context, android.R.drawable.ic_dialog_alert)
+}
+
+private fun showMessage(message: String, context: Context, icon: Int) {
     AlertDialog.Builder(context)
         .setTitle(context.getString(R.string.oops))
         .setMessage(message)
         .setPositiveButton(android.R.string.ok, null)
-        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setIcon(icon)
         .show()
 }
 
@@ -119,8 +130,13 @@ fun <T: Activity> launchActivity(fromContext: Context, toActivity: Class<T>,
     fromContext.startActivity(intent)
 }
 
+// TODO extract activity loader to separate class
 fun <T: Activity> Context.launchActivity(toActivity: Class<T>): ActivityLoader<T> {
-    return ActivityLoader(this, toActivity)
+    return ActivityLoader(this, toBeLoaded =  toActivity)
+}
+
+fun <T: Activity> Activity.launchForResult(toActivity: Class<T>): ActivityLoader<T> {
+    return ActivityLoader(this, this, toActivity)
 }
 
 fun <T: Activity> launchActivityForResult(
@@ -130,9 +146,12 @@ fun <T: Activity> launchActivityForResult(
     fromActivity.startActivityForResult(intent, request)
 }
 
-class ActivityLoader <T: Activity> (private val context: Context, toBeLoaded: Class<T>) {
+class ActivityLoader <T: Activity> (private val context: Context,
+                                    private val activity: Activity? = null,
+                                    toBeLoaded: Class<T>) {
 
     private val intent = Intent(context, toBeLoaded)
+    private var requestCode: Int? = null
 
     fun putExtra(extraKey: String, extraValue: Long): ActivityLoader<T> {
         intent.putExtra(extraKey, extraValue)
@@ -140,8 +159,30 @@ class ActivityLoader <T: Activity> (private val context: Context, toBeLoaded: Cl
         return this
     }
 
+    fun putExtra(extraKey: String, extra: String): ActivityLoader<T> {
+        intent.putExtra(extraKey, extra)
+
+        return this
+    }
+
+    fun withRequestCode(requestCode: Int): ActivityLoader<T> {
+        this.requestCode = requestCode
+
+        return this
+    }
+
     fun start() {
-        context.startActivity(intent)
+        if (activity == null) {
+            context.startActivity(intent)
+        } else {
+            startForResult()
+        }
+    }
+
+    private fun startForResult() {
+        checkNotNull(requestCode) { "Request code is null" }
+
+        activity!!.startActivityForResult(intent, requestCode as Int)
     }
 }
 
