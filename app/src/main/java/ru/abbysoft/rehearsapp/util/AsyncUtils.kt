@@ -138,6 +138,13 @@ fun Context.loadRoomAsync(roomId: Long, consumer: Consumer<Room>) {
     ).execute(ServiceFactory.getDatabaseService().getRoom(roomId))
 }
 
+fun Context.loadUserAsync(userId: Long, consumer: Consumer<User>) {
+    AsyncServiceRequest(
+        consumer,
+        Consumer { showErrorMessage("Cannot load user $userId", this)}
+    ).execute(ServiceFactory.getDatabaseService().getUser(userId))
+}
+
 fun Context.bookSlot(slotId: Long, userId: Long, onSuccess: Runnable = Runnable { }) {
     AsyncServiceRequest(
         Consumer<Boolean> {

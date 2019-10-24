@@ -26,6 +26,9 @@ interface PlaceService {
     @POST("/user")
     fun saveUser(@Body user: User): Call<Long>
 
+    @GET("/user/{id}/")
+    fun getUser(@Path("id") id: Long): Call<User>
+
     @PUT("/place/update/")
     fun updatePlace(@Body place: Place) : Call<Boolean>
 

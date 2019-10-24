@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.time_slot.view.*
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.databinding.TimeSlotBinding
 import ru.abbysoft.rehearsapp.model.TimeSlot
+import ru.abbysoft.rehearsapp.util.loadUserAsync
 
 class TimeSlotsAdapter(private val timeSlots: List<TimeSlot>,
                        private val onSlotClicked: Consumer<TimeSlotBinding> = Consumer {  })
@@ -34,8 +35,19 @@ class TimeSlotsAdapter(private val timeSlots: List<TimeSlot>,
         fun bind(slot: TimeSlot) {
             binding.root.slot_book_button.setOnClickListener { onSlotClicked.accept(binding) }
             binding.slot = slot
-            binding.bookedBy = null
-            binding.executePendingBindings()
+
+            if (slot.bookedBy != -1L) {
+                loadUserInfo(slot.bookedBy)
+            }
+        }
+
+        private fun loadUserInfo(userId: Long) {
+            // TODO use cache
+            val context = binding.root.context
+            context.loadUserAsync(userId, Consumer {
+                binding.bookedBy = "${it.firstName} ${it.lastName}"
+                binding.executePendingBindings()
+            })
         }
     }
 
