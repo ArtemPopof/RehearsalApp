@@ -19,7 +19,7 @@ import java.util.concurrent.TimeoutException
 
 class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
                                    private val failCallback: Consumer<Exception>? = null,
-                                   private val timeoutSec: Long = 10L) : AsyncTask<Call<T>, Any, T>() {
+                                   private val timeoutSec: Long = 10L) : AsyncTask<Call<T>, Any, T?>() {
 
     private var exception: Exception? = null
 
@@ -27,7 +27,7 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
 
     val pool = Executors.newScheduledThreadPool(1)
 
-    override fun doInBackground(vararg params: Call<T>): T {
+    override fun doInBackground(vararg params: Call<T>): T?{
         if (timeoutSec > 0) {
             startTimer(Runnable {
                 this.cancel(true)
@@ -51,11 +51,16 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
             pool.shutdownNow()
         }
 
-        throw IllegalStateException("some error")
+        return null
     }
 
-    override fun onPostExecute(result: T) {
-        consumer.accept(result)
+    override fun onPostExecute(result: T?) {
+        if (exception == null && result != null) {
+            consumer.accept(result)
+        } else {
+            failCallback?.accept(exception)
+            Log.e(TAG, "Error occurred: $exception")
+        }
     }
 
     fun execute(call: Call<T>) {
@@ -66,17 +71,6 @@ class AsyncServiceRequest<T : Any>(private val consumer: Consumer<T>,
         ex.printStackTrace()
         Log.e(TAG, ex.toString())
         this.exception = ex
-        this.cancel(true)
-    }
-
-    override fun onCancelled() {
-        super.onCancelled()
-
-        if (exception != null) {
-            failCallback?.accept(exception)
-        } else {
-            Log.e(TAG, "error is null")
-        }
     }
 
     private fun startTimer(callback: Runnable) {
