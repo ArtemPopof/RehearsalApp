@@ -16,13 +16,15 @@ import com.google.android.gms.maps.model.LatLng
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceCreationBinding
+import ru.abbysoft.rehearsapp.map.MapActivity
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.*
 import java.lang.Exception
 
-class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
+class PlaceCreationActivity :
+    MapActivity(R.layout.activity_place_creation) {
 
     private val TAG = PlaceCreationActivity::class.java.name
 
@@ -36,17 +38,10 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        configureViewModel()
-
         nameField = findViewById(R.id.place_creation_name)
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
     }
 
-    private fun configureViewModel() {
+    override fun configureLayout() {
         val binding = DataBindingUtil.setContentView<ActivityPlaceCreationBinding>(
             this, R.layout.activity_place_creation)
 
@@ -62,8 +57,8 @@ class PlaceCreationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
+        super.onMapReady(map)
         markerCreator = MapMarkerCreator(map)
-        zoomMapToCurrentLocation(map, this)
     }
 
     fun save(view: View) {
