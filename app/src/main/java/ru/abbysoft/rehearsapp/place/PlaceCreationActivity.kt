@@ -1,7 +1,6 @@
 package ru.abbysoft.rehearsapp.place
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,15 +9,10 @@ import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import ru.abbysoft.rehearsapp.R
-import ru.abbysoft.rehearsapp.cache.CacheFactory
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceCreationBinding
 import ru.abbysoft.rehearsapp.map.MapActivity
 import ru.abbysoft.rehearsapp.model.Place
-import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.*
 import java.lang.Exception

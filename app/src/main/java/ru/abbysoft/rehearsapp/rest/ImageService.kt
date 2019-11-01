@@ -1,10 +1,9 @@
 package ru.abbysoft.rehearsapp.rest
 
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import ru.abbysoft.rehearsapp.model.ImageControllerResponse
 
 interface ImageService {
@@ -13,5 +12,9 @@ interface ImageService {
     fun getImage(@Path("id") id: String) : Call<ByteArray>
 
     @POST("/image/save/")
-    fun addPlace(@Body bytes: ByteArray) : Call<ImageControllerResponse>
+    fun uploadImageOld(@Body bytes: ByteArray) : Call<ImageControllerResponse>
+
+    @Multipart
+    @POST("/image/save/")
+    fun uploadImage(@Part part: MultipartBody.Part): Call<ImageControllerResponse>
 }

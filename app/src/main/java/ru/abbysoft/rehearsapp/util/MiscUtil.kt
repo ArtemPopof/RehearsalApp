@@ -13,6 +13,9 @@ import androidx.databinding.Observable
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.VKApiCallback
 import com.vk.api.sdk.exceptions.VKApiExecutionException
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.login.AuntificationManager
 import ru.abbysoft.rehearsapp.login.VkAccountInfoRequest
@@ -72,15 +75,20 @@ fun handlePickImageResult(data: Intent?, consumer: Consumer<Uri>, context: Conte
 
 }
 
+// TODO refactor to ImageDownloader
 fun saveImageToServer(bytes: ByteArray, onResult: Consumer<String>, onFail: Runnable? = null) {
     ImageLoader(onFail,  onResult).execute(bytes)
 }
+
+private const val JPEG_MEDIATYPE = "image/jpeg"
 
 class ImageLoader(private val failCallback: Runnable?, private val onSuccess: Consumer<String>)
     : AsyncTask<ByteArray, Void, String>() {
 
     override fun doInBackground(vararg args: ByteArray): String {
-        val response = ServiceFactory.getImageService().addPlace(args[0]).execute().body()
+        println("Saving ${args[0].size} bytes")
+        val body = createBody(args[0])
+        val response = ServiceFactory.getImageService().uploadImage(body).execute().body()
         if (response?.imageId == null) {
             cancel(true)
         } else {
@@ -88,6 +96,15 @@ class ImageLoader(private val failCallback: Runnable?, private val onSuccess: Co
         }
 
         throw IllegalStateException("Look to the code")
+    }
+
+    private fun createBody(bytes: ByteArray): MultipartBody.Part {
+        val requestBody = RequestBody.create(
+            MediaType.get(JPEG_MEDIATYPE),
+            bytes
+        )
+
+        return MultipartBody.Part.create(requestBody)
     }
 
     override fun onCancelled() {
