@@ -144,6 +144,9 @@
     <string name="dollars">%1.2f$</string>
     <string name="error_booking_slot">Error while booking slot, try again later</string>
     <string name="login_to_book">login to book</string>
+    <string name="call">Call</string>
+    <string name="open">Open</string>
+    <string name="find_places_nearby">Find places nearby</string>
 
     <integer name="com_vk_sdk_AppId">7171332</integer>
 
