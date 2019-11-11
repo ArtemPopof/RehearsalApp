@@ -12,7 +12,7 @@
         android:layout_height="130dp"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
-        android:background="@drawable/info_drawer"
+        android:background="@drawable/info_drawable_not_available"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -78,37 +78,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
-    <Button
-        android:id="@+id/call_button"
-        android:layout_width="115dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_accent"
-        android:fontFamily="@font/roboto"
-        android:text="@string/call"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView10" />
 
-    <Button
-        android:id="@+id/open_button"
-        android:layout_width="115dp"
-        android:layout_height="37dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_common"
-        android:fontFamily="@font/roboto"
-        android:text="@string/open"
-        android:textAllCaps="false"
+    <LinearLayout
+        android:id="@+id/buttons_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="fill"
+        android:orientation="horizontal"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/call_button" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView2">
+
+        <Button
+            android:id="@+id/open_button"
+            android:layout_width="115dp"
+            android:layout_height="37dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/button_common"
+            android:fontFamily="@font/roboto"
+            android:text="@string/open"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/call_button"
+            android:layout_width="115dp"
+            android:layout_height="37dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/button_accent"
+            android:fontFamily="@font/roboto"
+            android:text="@string/call"
+            android:textAllCaps="false"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorError"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -125,5 +134,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="145dp"
+        android:layout_height="55dp"
+        android:background="@drawable/corner_area"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Closed for today"
+        android:textColor="@color/colorError"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView12"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toTopOf="@+id/textView12" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
