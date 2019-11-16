@@ -1,53 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:map="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:layout_gravity="bottom"-->
-<!--    tools:context=".MapsActivity">-->
-
-<!--&lt;!&ndash;    <androidx.constraintlayout.widget.ConstraintLayout&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_height="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        tools:context=".MapsActivity">&ndash;&gt;-->
-
-<!--&lt;!&ndash;        <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;            android:id="@+id/header"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="50dp"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:background="@color/colorError"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;            android:id="@+id/textView11"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:fontFamily="@font/roboto"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:text="@string/find_places_nearby"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:textColor="#FFFFFF"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:textSize="18sp"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintBottom_toBottomOf="@+id/header"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintStart_toStartOf="@+id/header"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;        <fragment&ndash;&gt;-->
-<!--&lt;!&ndash;            android:id="@+id/map"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:name="com.google.android.gms.maps.SupportMapFragment"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="0dp"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="0dp"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintTop_toTopOf="parent">&ndash;&gt;-->
-<!--&lt;!&ndash;        </fragment>&ndash;&gt;-->
-<!--&lt;!&ndash;    </androidx.constraintlayout.widget.ConstraintLayout>&ndash;&gt;-->
-<!--</com.sothree.slidinguppanel.SlidingUpPanelLayout>-->
-
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -63,13 +14,46 @@
     sothree:umanoFadeColor="@android:color/transparent"
     sothree:umanoShadowHeight="0sp">
 
-    <fragment
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:textSize="16sp"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+        <ImageView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorError"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/find_places_nearby"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/header"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <include layout="@layout/info_drawer"/>
 
