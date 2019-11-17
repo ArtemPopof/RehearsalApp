@@ -104,7 +104,7 @@
     <string name="place_location_not_set">Place location must be specified</string>
     <string name="place_name_blank">Specify your place name</string>
     <string name="areaM2">%1.2f m2</string>
-    <string name="priceFrom">from %1.2f $</string>
+    <string name="priceFrom">from %1.2f$</string>
     <string name="cannot_load_places">Cannot load places, check internet connection</string>
     <string name="error_loading_image">Error loading image</string>
     <string name="cannot_upload_header_image">Cannot update header image, try again</string>

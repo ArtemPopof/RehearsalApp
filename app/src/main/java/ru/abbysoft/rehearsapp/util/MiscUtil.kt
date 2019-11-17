@@ -234,3 +234,8 @@ class UserChangedListener (val consumer: Consumer<User>) : Observable.OnProperty
     }
 
 }
+
+fun getMinRoomPrice(rooms: List<Room>?): Float {
+    if (rooms.isNullOrEmpty()) return 0.0f
+    return rooms.minBy { it.price }!!.price
+}
