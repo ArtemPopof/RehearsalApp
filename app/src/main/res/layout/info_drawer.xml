@@ -95,7 +95,6 @@
             android:id="@+id/open_button"
             android:layout_width="115dp"
             android:layout_height="37dp"
-            android:layout_marginBottom="4dp"
             android:background="@drawable/button_common"
             android:fontFamily="@font/roboto"
             android:text="@string/open"
@@ -116,8 +115,8 @@
     <TextView
         android:id="@+id/textView12"
         android:layout_width="145dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="27dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/corner_area"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
