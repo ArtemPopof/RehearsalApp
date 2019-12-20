@@ -1,10 +1,16 @@
 package ru.abbysoft.rehearsapp.util
 
 import android.content.Context
+import android.location.Address
+import android.location.Geocoder
 import android.os.AsyncTask
 import android.util.Log
 import androidx.core.util.Consumer
+import com.google.android.gms.maps.model.LatLng
+import okhttp3.Request
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.login.AuntificationManager
 import ru.abbysoft.rehearsapp.model.Place
@@ -13,6 +19,7 @@ import ru.abbysoft.rehearsapp.model.User
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.lang.Exception
 import java.lang.IllegalStateException
+import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException

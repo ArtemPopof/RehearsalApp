@@ -37,6 +37,11 @@
             android:name=".place.PlaceViewActivity"
             android:label="@string/title_activity_place_view"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/title_activity_maps" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -52,10 +57,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_maps" />
+        <service
+            android:name=".map.FetchAddressIntentService"
+            android:exported="false"/>
     </application>
 
 </manifest>

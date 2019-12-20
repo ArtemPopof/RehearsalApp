@@ -1,11 +1,18 @@
 package ru.abbysoft.rehearsapp.map
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.Consumer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.util.MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION
 import ru.abbysoft.rehearsapp.util.checkForPermissionAndGrantIfNeeded

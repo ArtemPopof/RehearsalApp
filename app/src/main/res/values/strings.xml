@@ -147,6 +147,12 @@
     <string name="call">Call</string>
     <string name="open">Open</string>
     <string name="find_places_nearby">Find places nearby</string>
+    <string name="service_not_available">service not available</string>
+    <string name="invalid_lat_long_used">invalid latlong used</string>
+    <string name="no_address_found">no address found</string>
+    <string name="address_found">address found</string>
+    <string name="no_geocoder_available">Error: No geocoder available</string>
+    <string name="cannot_determine_place_location">Cannot determine place location</string>
 
     <integer name="com_vk_sdk_AppId">7171332</integer>
 
