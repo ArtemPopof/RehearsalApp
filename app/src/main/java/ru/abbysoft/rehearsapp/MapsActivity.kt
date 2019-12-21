@@ -4,14 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.util.Consumer
+import androidx.databinding.DataBindingUtil
+import com.google.android.gms.maps.CameraUpdate
+import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.android.synthetic.main.activity_maps.*
+import ru.abbysoft.rehearsapp.databinding.ActivityMapsBinding
 import ru.abbysoft.rehearsapp.map.MapActivity
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.location
-import ru.abbysoft.rehearsapp.place.PlaceViewActivity
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
 import ru.abbysoft.rehearsapp.util.showErrorMessage
@@ -19,12 +24,18 @@ import ru.abbysoft.rehearsapp.util.showErrorMessage
 class MapsActivity : MapActivity(R.layout.activity_maps) {
     private var places: List<Place>? = null
     private val positionPlace = HashMap<LatLng, Place>()
+    private lateinit var binding: ActivityMapsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // get all places from rest
         loadPlaces()
+    }
+
+    override fun configureLayout() {
+        binding = DataBindingUtil.setContentView(
+            this, R.layout.activity_maps)
     }
 
     private fun loadPlaces() {
@@ -77,11 +88,12 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
     }
 
     private fun placeSelected(place: Place?) {
-        if (place == null) {
-            return
-        }
+        place ?: return
 
-        PlaceViewActivity.launchForView(this, place.id)
+        binding.currentPlace = place
+        sliding_layout.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+
+        mMap?.moveCamera(CameraUpdateFactory.newLatLng(place.location()))
     }
 
     companion object {

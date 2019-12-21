@@ -14,6 +14,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.map.AddressResultReceiver
 import ru.abbysoft.rehearsapp.map.FetchAddressIntentService
