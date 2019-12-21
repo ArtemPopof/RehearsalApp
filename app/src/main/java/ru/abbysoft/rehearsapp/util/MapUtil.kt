@@ -19,6 +19,7 @@ import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.map.AddressResultReceiver
 import ru.abbysoft.rehearsapp.map.FetchAddressIntentService
 import ru.abbysoft.rehearsapp.map.MapActivity
+import java.lang.StringBuilder
 
 val MOSCOW = LatLng(55.751244, 37.618423)
 const val MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1
@@ -48,6 +49,24 @@ fun getCurrentLocation(context: Context, callback: Consumer<LatLng>) {
         it.printStackTrace()
         callback.accept(MOSCOW)
     }
+}
+
+fun Context.getShortAddressByLocation(location: LatLng, consumer: Consumer<String>) {
+    getAddressByLocation(location, Consumer {
+        val builder = StringBuilder()
+        val tokens = it.split(",")
+        if (tokens.size <= 2) {
+            consumer.accept(it)
+        } else {
+            for (i in 0 until tokens.size - 3) {
+                builder.append(tokens[i])
+                builder.append(", ")
+            }
+            builder.append(tokens[tokens.size - 3])
+
+            consumer.accept(builder.toString())
+        }
+    })
 }
 
 fun Context.getAddressByLocation(location: LatLng, consumer: Consumer<String>) {

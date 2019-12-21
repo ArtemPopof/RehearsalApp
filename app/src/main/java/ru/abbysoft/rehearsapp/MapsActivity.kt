@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
+import com.google.android.gms.common.util.MapUtils
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 
@@ -19,6 +20,8 @@ import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.location
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
+import ru.abbysoft.rehearsapp.util.getAddressByLocation
+import ru.abbysoft.rehearsapp.util.getShortAddressByLocation
 import ru.abbysoft.rehearsapp.util.showErrorMessage
 
 class MapsActivity : MapActivity(R.layout.activity_maps) {
@@ -94,7 +97,12 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
         sliding_layout.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
 
         mMap?.moveCamera(CameraUpdateFactory.newLatLng(place.location()))
+
+        getShortAddressByLocation(place.location(), Consumer {
+            binding.placeAddress = it
+        })
     }
+    // TODO position in Place model (maybe remove?)
 
     companion object {
         fun launchFrom(context: Context) {

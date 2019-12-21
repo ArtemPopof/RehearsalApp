@@ -8,6 +8,9 @@
         <variable
             name="currentPlace"
             type="ru.abbysoft.rehearsapp.model.Place" />
+        <variable
+            name="placeAddress"
+            type="String" />
     </data>
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -63,7 +66,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <include layout="@layout/info_drawer" app:place="@{currentPlace}"/>
+        <include layout="@layout/info_drawer" app:place="@{currentPlace}" app:placeAddress="@{placeAddress}"/>
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </layout>
