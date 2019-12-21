@@ -20,7 +20,7 @@ import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.location
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
-import ru.abbysoft.rehearsapp.util.getAddressByLocation
+import ru.abbysoft.rehearsapp.util.distanceFrom
 import ru.abbysoft.rehearsapp.util.getShortAddressByLocation
 import ru.abbysoft.rehearsapp.util.showErrorMessage
 
@@ -101,6 +101,9 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
         getShortAddressByLocation(place.location(), Consumer {
             binding.placeAddress = it
         })
+
+        currentLocation ?: return
+        binding.distance = currentLocation!!.distanceFrom(place.location())
     }
     // TODO position in Place model (maybe remove?)
 

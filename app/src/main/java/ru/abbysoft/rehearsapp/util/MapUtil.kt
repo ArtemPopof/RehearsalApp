@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.location.Location
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -26,12 +27,6 @@ const val MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1
 
 fun zoomMapToCurrentLocation(map : GoogleMap, activity: Activity) {
     map.moveCamera(CameraUpdateFactory.zoomTo(10.0f))
-
-    activity.getAddressByLocation(
-        MOSCOW,
-        Consumer {
-                address -> Toast.makeText(activity, "Address is $address", Toast.LENGTH_LONG).show()
-        })
 
     val callback = Consumer<LatLng> {
         map.moveCamera(CameraUpdateFactory.newLatLng(it))
@@ -96,5 +91,16 @@ private fun grantLocationPermission(activity: Activity) {
         arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
         MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION
     )
+}
+
+fun LatLng.distanceFrom(another: LatLng): Float {
+    val firstLocation = Location("first")
+    firstLocation.latitude = this.latitude
+    firstLocation.longitude = this.longitude
+
+    val secondLocation = Location("second")
+        .apply { latitude = another.latitude; longitude = another.longitude }
+
+    return firstLocation.distanceTo(secondLocation) / 1000 // km
 }
 

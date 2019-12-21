@@ -11,6 +11,9 @@
         <variable
             name="placeAddress"
             type="String" />
+        <variable
+            name="distance"
+            type="Float" />
     </data>
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -66,7 +69,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <include layout="@layout/info_drawer" app:place="@{currentPlace}" app:placeAddress="@{placeAddress}"/>
+        <include layout="@layout/info_drawer"
+            app:place="@{currentPlace}"
+            app:placeAddress="@{placeAddress}"
+            app:distance="@{distance}"/>
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </layout>

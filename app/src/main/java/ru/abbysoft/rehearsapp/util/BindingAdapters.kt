@@ -63,6 +63,16 @@ object BindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("app:distance")
+    fun distance(text: TextView, distance: Float) {
+        if (distance >= 1.0f) {
+            text.text = text.context.getString(R.string.distance, distance)
+        } else {
+            text.text = text.context.getString(R.string.distanceMeters, (distance * 1000).toInt())
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("app:area")
     fun area(text: TextView, area: Float) {
         text.text = text.context.getString(R.string.areaM2, area)

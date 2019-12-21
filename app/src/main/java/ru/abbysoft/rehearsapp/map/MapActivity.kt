@@ -3,17 +3,21 @@ package ru.abbysoft.rehearsapp.map
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.Consumer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.util.MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION
 import ru.abbysoft.rehearsapp.util.checkForPermissionAndGrantIfNeeded
+import ru.abbysoft.rehearsapp.util.getCurrentLocation
 import ru.abbysoft.rehearsapp.util.zoomMapToCurrentLocation
 
 open class MapActivity(private val layoutId: Int) : AppCompatActivity(), OnMapReadyCallback {
 
     protected var mMap: GoogleMap? = null
+    protected var currentLocation: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +49,14 @@ open class MapActivity(private val layoutId: Int) : AppCompatActivity(), OnMapRe
 
         checkForPermissionAndGrantIfNeeded()
 
+        initPosition()
+    }
+
+    private fun initPosition() {
         zoomMapToCurrentLocation(mMap as GoogleMap, this)
+        getCurrentLocation(this, Consumer {
+            currentLocation = it
+        })
     }
 
     override fun onRequestPermissionsResult(
@@ -57,7 +68,7 @@ open class MapActivity(private val layoutId: Int) : AppCompatActivity(), OnMapRe
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     if (mMap == null) return
-                    zoomMapToCurrentLocation(mMap as GoogleMap, this)
+                    initPosition()
                 }
                 return
             }
