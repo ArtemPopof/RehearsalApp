@@ -9,6 +9,7 @@ import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.GoogleMap
+import kotlinx.android.synthetic.main.activity_place_creation.*
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.databinding.ActivityPlaceCreationBinding
 import ru.abbysoft.rehearsapp.map.MapActivity
@@ -67,6 +68,8 @@ class PlaceCreationActivity :
         val place = Place()
         place.position = location.toString()
         place.name = nameField.text.toString()
+        place.telephone = place_telephone_field.text.toString()
+        place.website = place_website_field.text.toString()
 
         if (lastCreatedPlace == null) {
             addPlace(place)

@@ -2,11 +2,11 @@ package ru.abbysoft.rehearsapp
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.core.util.Consumer
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.common.util.MapUtils
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
@@ -106,6 +106,24 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
         binding.distance = currentLocation!!.distanceFrom(place.location())
     }
     // TODO position in Place model (maybe remove?)
+
+    fun callNumber(view: View) {
+        val telephone = binding.currentPlace?.telephone
+
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:$telephone")
+
+        startActivity(intent)
+    }
+
+    fun openWebsite(view: View) {
+        val website = binding.currentPlace?.website
+
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("http:$website")
+
+        startActivity(intent)
+    }
 
     companion object {
         fun launchFrom(context: Context) {

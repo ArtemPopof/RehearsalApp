@@ -156,6 +156,11 @@
     <string name="no_geocoder_available">Error: No geocoder available</string>
     <string name="cannot_determine_place_location">Cannot determine place location</string>
     <string name="loading_address">Loading address...</string>
+    <string name="open_web">Website</string>
+    <string name="telephone_number">Telephone number</string>
+    <string name="website_or_social_media_page">Website or social media page</string>
+    <string name="no_telephone">No telephone</string>
+    <string name="no_website">No website</string>
 
     <integer name="com_vk_sdk_AppId">7171332</integer>
 

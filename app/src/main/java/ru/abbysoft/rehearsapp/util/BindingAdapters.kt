@@ -89,6 +89,12 @@ object BindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("app:disableIf")
+    fun disableIf(view: View, boolean: Boolean) {
+        view.isEnabled = !boolean
+    }
+
+    @JvmStatic
     @BindingAdapter("app:timeSpan")
     fun timeSpan(textView: TextView, slot: TimeSlot?) {
         if (slot == null) {
