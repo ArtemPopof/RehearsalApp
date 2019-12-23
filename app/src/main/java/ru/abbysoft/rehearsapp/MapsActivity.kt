@@ -10,8 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_maps.*
 import ru.abbysoft.rehearsapp.databinding.ActivityMapsBinding
@@ -28,6 +27,7 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
     private var places: List<Place>? = null
     private val positionPlace = HashMap<LatLng, Place>()
     private lateinit var binding: ActivityMapsBinding
+    private var selected: Marker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +62,15 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
     private fun createPlaceMarkers() {
         for (place in places as List<Place>) {
             val location = place.location()
-            mMap?.addMarker(MarkerOptions().position(location).title(place.name))
+            mMap?.addMarker(createMarker(location, place.name))
             positionPlace[location] = place
         }
+    }
+
+    private fun createMarker(location: LatLng, name: String, isSelected: Boolean = false): MarkerOptions {
+        val marker =  MarkerOptions().position(location).title(name)
+        val iconResource = if (isSelected) R.drawable.selected_marker else R.drawable.marker
+        return marker.icon(BitmapDescriptorFactory.fromResource(iconResource))
     }
 
     /**
@@ -85,9 +91,16 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
 
         // add onclick listeners
         mMap?.setOnMarkerClickListener {
+            selected?.unselect()
+            it.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.selected_marker))
+            selected = it
             placeSelected(positionPlace[it.position])
             true
         }
+    }
+
+    private fun Marker.unselect() {
+        this.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
     }
 
     private fun placeSelected(place: Place?) {
