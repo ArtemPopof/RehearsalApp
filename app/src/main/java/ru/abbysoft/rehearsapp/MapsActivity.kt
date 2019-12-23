@@ -94,7 +94,7 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
         place ?: return
 
         binding.currentPlace = place
-        sliding_layout.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+        sliding_layout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
 
         mMap?.moveCamera(CameraUpdateFactory.newLatLng(place.location()))
 
