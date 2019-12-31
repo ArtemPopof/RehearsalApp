@@ -16,7 +16,6 @@ import com.vk.api.sdk.exceptions.VKApiExecutionException
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.login.AuntificationManager
 import ru.abbysoft.rehearsapp.login.VkAccountInfoRequest
 import ru.abbysoft.rehearsapp.login.VkUser
@@ -25,6 +24,12 @@ import ru.abbysoft.rehearsapp.model.Room
 import ru.abbysoft.rehearsapp.model.User
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import java.lang.IllegalStateException
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import android.graphics.Color.colorToHSV
+import com.google.android.gms.maps.model.BitmapDescriptor
+import androidx.core.content.ContextCompat
+import ru.abbysoft.rehearsapp.R
+
 
 fun Context.showErrorMessage(message: String) {
     showErrorMessage(message, this)

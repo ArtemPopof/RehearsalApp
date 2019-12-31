@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/RehearsalApp-MapActivity.iml" filepath="$PROJECT_DIR$/RehearsalApp-MapActivity.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/RehearsalApp-app.iml" filepath="$PROJECT_DIR$/app/RehearsalApp-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pet-RehearsalApp-MapActivity.iml" filepath="$PROJECT_DIR$/pet-RehearsalApp-MapActivity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/pet-RehearsalApp-app.iml" filepath="$PROJECT_DIR$/app/pet-RehearsalApp-app.iml" />
     </modules>
   </component>
 </project>

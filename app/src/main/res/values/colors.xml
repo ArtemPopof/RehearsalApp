@@ -5,4 +5,5 @@
     <color name="colorAccent">#F2C94C</color>
     <color name="colorError">#AE2727</color>
     <color name="commonButton">#FFFFFF</color>
+    <color name="markerUnselected">#EEEEEE</color>
 </resources>

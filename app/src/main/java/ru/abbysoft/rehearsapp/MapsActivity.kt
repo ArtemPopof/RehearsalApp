@@ -69,8 +69,8 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
 
     private fun createMarker(location: LatLng, name: String, isSelected: Boolean = false): MarkerOptions {
         val marker =  MarkerOptions().position(location).title(name)
-        val iconResource = if (isSelected) R.drawable.selected_marker else R.drawable.marker
-        return marker.icon(BitmapDescriptorFactory.fromResource(iconResource))
+        val iconResource = if (isSelected) BitmapDescriptorFactory.defaultMarker() else BitmapDescriptorFactory.fromResource(R.drawable.marker)
+        return marker.icon(iconResource)
     }
 
     /**
@@ -92,7 +92,7 @@ class MapsActivity : MapActivity(R.layout.activity_maps) {
         // add onclick listeners
         mMap?.setOnMarkerClickListener {
             selected?.unselect()
-            it.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.selected_marker))
+            it.setIcon(BitmapDescriptorFactory.defaultMarker())
             selected = it
             placeSelected(positionPlace[it.position])
             true
