@@ -53,7 +53,7 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("app:priceFrom")
     fun priceFrom(text: TextView, price: Float) {
-        text.text = text.context.getString(R.string.priceFrom, price)
+        text.text = text.context.getString(R.string.priceFrom, price.toInt())
     }
 
     @JvmStatic

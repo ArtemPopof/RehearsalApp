@@ -4,20 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.util.Consumer
-import androidx.databinding.Observable
-import androidx.databinding.Observable.OnPropertyChangedCallback
 import kotlinx.android.synthetic.main.activity_menu.*
 import ru.abbysoft.rehearsapp.MapsActivity
 import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.login.AuntificationManager
-import ru.abbysoft.rehearsapp.login.VkUser
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.User
-import ru.abbysoft.rehearsapp.place.PlaceCreationActivity
 import ru.abbysoft.rehearsapp.place.PlaceViewActivity
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
-import ru.abbysoft.rehearsapp.util.getVkUserInfo
 import ru.abbysoft.rehearsapp.util.showErrorMessage
 import ru.abbysoft.rehearsapp.util.whenUserChanged
 import java.util.*
@@ -65,7 +60,7 @@ class MenuActivity : AppCompatActivity() {
     }
 
     fun onAddNewPlaceClicked(view : View) {
-        PlaceCreationActivity.launch(view)
+        //PlaceCreationActivity.launch(view)
     }
 
 

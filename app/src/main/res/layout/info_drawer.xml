@@ -47,16 +47,18 @@
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/priceFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/roboto"
-            app:priceFrom="@{MiscUtilKt.getMinRoomPrice(place.rooms)}"
+            app:priceFrom="@{place.averagePrice}"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintBottom_toBottomOf="@+id/buttons_panel"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="@+id/buttons_panel" />
 
         <TextView
             android:id="@+id/textView8"
@@ -113,10 +115,10 @@
                 android:layout_height="37dp"
                 android:background="@drawable/button_common"
                 android:fontFamily="@font/roboto"
-                app:disableIf='@{place.website == null}'
+                android:onClick="openWebsite"
                 android:text='@{place.website == null ? @string/no_website : @string/open_web}'
                 android:textAllCaps="false"
-                android:onClick="openWebsite"/>
+                app:disableIf='@{place.website == null}' />
 
             <Button
                 android:id="@+id/call_button"
@@ -127,10 +129,10 @@
                 android:layout_marginBottom="4dp"
                 android:background="@drawable/button_accent"
                 android:fontFamily="@font/roboto"
-                app:disableIf='@{place.telephone == null}'
+                android:onClick="callNumber"
                 android:text='@{place.telephone == null ? @string/no_telephone : @string/call}'
                 android:textAllCaps="false"
-                android:onClick="callNumber"/>
+                app:disableIf='@{place.telephone == null}' />
         </LinearLayout>
 
         <TextView
