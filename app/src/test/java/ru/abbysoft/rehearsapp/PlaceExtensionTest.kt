@@ -4,11 +4,13 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.location
+import ru.abbysoft.rehearsapp.util.MOSCOW
 import java.util.*
 
-private const val LAT = 42.5124
-private const val LNG = -20.5355
-private const val DELTA = 0.0001
+private const val LAT = 59.89771530274918
+private const val LNG = 30.414091050624847
+private const val POSITION = "lat/lng: (59.89771530274918,30.414091050624847)"
+private const val DELTA = 0.000000000000001
 
 class PlaceExtensionTest {
 
@@ -16,7 +18,7 @@ class PlaceExtensionTest {
 
     @Test
     fun testLocationConversionShouldNotRaiseException() {
-        val place = Place().apply { position = "$LAT,$LNG" }
+        val place = Place().apply { position = POSITION }
 
         val result = place.location()
 
@@ -25,12 +27,12 @@ class PlaceExtensionTest {
     }
 
     @Test
-    fun testEmptyLocationConversionShouldReturnNull() {
+    fun testEmptyLocationConversionShouldReturnDefaultLocation() {
         val place = Place()
 
         val result = place.location()
 
-        assertEquals(null, result)
+        assertEquals(MOSCOW, result)
     }
 
     private fun generatePlaceWithRandomLocation(): Place {
