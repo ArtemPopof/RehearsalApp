@@ -6,11 +6,9 @@ import junit.framework.Assert.assertNotNull
 import org.junit.Test
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
-import ru.abbysoft.rehearsapp.util.getRestBase
+import ru.abbysoft.rehearsapp.util.baseUrl
 
 class RestServiceTest {
-
-    private val baseUrl = getRestBase()
 
     @Test
     fun initialisationOfRestServiceMustSuccesseed() {

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Rehearsapp</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Репточки СПБ</string>
     <string name="title_activity_place_view">PlaceViewActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -146,9 +146,9 @@
     <string name="dollars">%1.2f$</string>
     <string name="error_booking_slot">Error while booking slot, try again later</string>
     <string name="login_to_book">login to book</string>
-    <string name="call">Call</string>
+    <string name="call">Позвонить</string>
     <string name="open">Open</string>
-    <string name="find_places_nearby">Find places nearby</string>
+    <string name="find_places_nearby">Карта репточек</string>
     <string name="service_not_available">service not available</string>
     <string name="invalid_lat_long_used">invalid latlong used</string>
     <string name="no_address_found">no address found</string>
@@ -156,7 +156,7 @@
     <string name="no_geocoder_available">Error: No geocoder available</string>
     <string name="cannot_determine_place_location">Cannot determine place location</string>
     <string name="loading_address">Loading address...</string>
-    <string name="open_web">Website</string>
+    <string name="open_web">Сайт</string>
     <string name="telephone_number">Telephone number</string>
     <string name="website_or_social_media_page">Website or social media page</string>
     <string name="no_telephone">No telephone</string>
