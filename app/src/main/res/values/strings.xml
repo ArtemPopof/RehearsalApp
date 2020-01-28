@@ -105,8 +105,8 @@
     <string name="place_name_blank">Specify your place name</string>
     <string name="areaM2">%1.2f m2</string>
     <string name="priceFrom">%d ₽ / 3ч</string>
-    <string name="distance">%1.1f km</string>
-    <string name="distanceMeters">%d m</string>
+    <string name="distance">%1.1f км</string>
+    <string name="distanceMeters">%d м</string>
     <string name="cannot_load_places">Cannot load places, check internet connection</string>
     <string name="error_loading_image">Error loading image</string>
     <string name="cannot_upload_header_image">Cannot update header image, try again</string>
