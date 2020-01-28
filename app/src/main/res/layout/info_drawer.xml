@@ -53,12 +53,12 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/roboto"
-            app:priceFrom="@{place.averagePrice}"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/buttons_panel"
-            app:layout_constraintStart_toStartOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="@+id/buttons_panel" />
+            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+            app:layout_constraintEnd_toEndOf="@+id/buttons_panel"
+            app:layout_constraintTop_toTopOf="@+id/textView7"
+            app:priceFrom="@{place.averagePrice}" />
 
         <TextView
             android:id="@+id/textView8"
@@ -81,9 +81,9 @@
             app:distance="@{distance}"
             android:textColor="#DEFFFFFF"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView7"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/textView7" />
+            app:layout_constraintBottom_toBottomOf="@+id/buttons_panel"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="@+id/buttons_panel"/>
 
         <ImageView
             android:id="@+id/imageView3"

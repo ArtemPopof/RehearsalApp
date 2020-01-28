@@ -10,6 +10,7 @@ import ru.abbysoft.rehearsapp.R
 import ru.abbysoft.rehearsapp.login.AuntificationManager
 import ru.abbysoft.rehearsapp.model.Place
 import ru.abbysoft.rehearsapp.model.User
+import ru.abbysoft.rehearsapp.place.PlaceCreationActivity
 import ru.abbysoft.rehearsapp.place.PlaceViewActivity
 import ru.abbysoft.rehearsapp.rest.ServiceFactory
 import ru.abbysoft.rehearsapp.util.AsyncServiceRequest
@@ -60,7 +61,7 @@ class MenuActivity : AppCompatActivity() {
     }
 
     fun onAddNewPlaceClicked(view : View) {
-        //PlaceCreationActivity.launch(view)
+        PlaceCreationActivity.launch(view)
     }
 
 

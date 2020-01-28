@@ -40,6 +40,8 @@ class RehearsalApp : MultiDexApplication() {
     }
 
     private fun logAllPlaces(place: List<Place>?) {
+        Log.i(TAG, baseUrl)
+        Log.i(TAG, ServiceFactory.getDatabaseService().toString())
         place?.forEach { Log.i(TAG, it.toString()) }
     }
 

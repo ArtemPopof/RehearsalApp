@@ -10,16 +10,18 @@ android {
         applicationId "ru.abbysoft.rehearsapp"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "0.1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
             multiDexKeepFile file('src/main/res/multidex-config.txt')
+            signingConfig signingConfigs.debug
+            debuggable = false
         }
     }
     dataBinding {
@@ -57,6 +59,8 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    compile 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
     implementation 'com.vk:androidsdk:2.1.1'
 

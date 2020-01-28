@@ -1,6 +1,13 @@
 # api keys
 *google_maps_api.xml
 
+# artifacts folder
+app/*
+projectFilesBackup/
+
+# maps api
+app/src/release/res/values/google_maps_api.xml
+
 # Built application files
 *.apk
 *.ap_

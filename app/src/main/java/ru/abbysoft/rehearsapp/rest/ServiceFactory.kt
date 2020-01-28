@@ -1,12 +1,24 @@
 package ru.abbysoft.rehearsapp.rest
 
+import android.util.Log
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ServiceFactory private constructor(baseUrl: String) {
 
+    private val interceptor : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+        this.level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    private val client : OkHttpClient = OkHttpClient.Builder().apply {
+        this.addInterceptor(interceptor)
+    }.build()
+
     private val retrofit = retrofit2.Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
+        .client(client)
         .build()
 
     var databaseService: PlaceService
